@@ -1,1 +1,1 @@
-# LittleLight
+# LittleLight Portfolio Project
