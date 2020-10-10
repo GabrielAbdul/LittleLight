@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''module that defines player class'''
-from models import Base
+from base_model import Base
 
 
 class Player(Base):
