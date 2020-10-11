@@ -67,13 +67,13 @@ def main():
                     pygame.quit()
                     quit()
 
-        gameDisplay.fill(white)
-        resume = button([width / 3, (height / 2) + 100, width / 3, 40])
-        quit = button([width / 3, (height / 2) + 100, width / 3, 40])
-        quit.addText('Quit')
-        resume.addText('Resume')
+            gameDisplay.fill(white)
+            resume = button([width / 3, (height / 2) + 100, width / 3, 40])
+            quit = button([width / 3, (height / 2) + 100, width / 3, 40])
+            quit.addText('Quit')
+            resume.addText('Resume')
 
-        pygame.display.update()
+            pygame.display.update()
 
     def unpause_game():
         '''function to unpause the game'''
