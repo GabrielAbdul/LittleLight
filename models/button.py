@@ -4,11 +4,17 @@ import pygame
 
 class button(pygame.Rect):
     '''Creates a rectangular button'''
-    def __init__(self, args, gameDisplay):
+    __gameDisplay = None
+    def __init__(self, args, gameDisplay=None):
         '''initializes a rectangle with values'''
+        if self.__gameDisplay is None and gameDisplay is None:
+            exit(2)
         self.left, self.top, self.width, self.height = args[0], args[1], args[2], args[3]
         self.rect = pygame.Rect(self.left, self.top, self.width, self.height)
-        self.gameDisplay = gameDisplay
+        if gameDisplay is not None:
+            button.__gameDisplay = self.gameDisplay = gameDisplay
+        else:
+            self.gameDisplay = button.__gameDisplay
 
     def draw(self):
         '''draws the rectangle'''
