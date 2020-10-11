@@ -15,4 +15,3 @@ class Save(Base):
         self.save_id = self.__saves
         self.__saves = save.id
         self.__achievements = []
-

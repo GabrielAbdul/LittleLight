@@ -5,7 +5,7 @@ from models.button import button
 
 def main():
     '''Basic game loop'''
-    global toolsCanvas, gameDisplay
+    global toolsCanvas, gameDisplay, paused = True
     toolsCanvas = pygame.Surface((700, 120))
     pygame.init()
 
@@ -73,6 +73,26 @@ def main():
             break
         pygame.display.flip()
         clock.tick(20)
+
+    def pause_game():
+        '''function to pause the game, should be within main game loop'''
+        while paused:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+            gameDisplay.fill(white)
+            resume = button([width / 3, (height / 2) + 100, width / 3, 40])
+            quit = button([width / 3, (height / 2) + 100, width / 3, 40])
+            quit.addText('Quit')
+            resume.addText('Resume')
+
+            pygame.display.update()
+
+    def unpause_game():
+        '''function to unpause the game'''
+        pause = False
 
 
 if __name__ == '__main__':
