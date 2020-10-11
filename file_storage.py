@@ -10,7 +10,7 @@ class FileStorage():
     # path to save game file
     __file_path = 'save_game.py'
 
-    @classmethod
+    @staticmethod
     def save(save_game):
         '''FileStorage module to create a saved game'''
         save_game.__achievements.append(achievement.check_achievements())
@@ -18,13 +18,13 @@ class FileStorage():
             pickle.dump(save_game, file)
         return
 
-    @classmethod
+    @staticmethod
     def load_save():
         '''FileStorage method to load a saved game'''
         with open('save_game.py', 'rb') as file:
             return pickle.load(file)
 
-    @classmethod
+    @staticmethod
     def delete_save():
         '''FileStorage method to delete previous saved game'''
         if os.path.exists('save_game.py'):
