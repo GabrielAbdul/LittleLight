@@ -57,5 +57,5 @@ def create_achievements():
     '''Creates all achievements with static IDs'''
     rdm = achievement(name="lucky", id=0, hint="You've gotta be pretty lucky to get this")
     stonks = achievement(name="stonks", id=1, hint="Have an absurd amount of strength")
-    ll = achievement(name="Little Light", id=0, hint="Increase your glow")
-    shine = achievement(name="Shine Bright", id=0, hint="Have a lot of glow")
+    ll = achievement(name="Little Light", id=2, hint="Increase your glow")
+    shine = achievement(name="Shine Bright", id=3, hint="Have a lot of glow")
