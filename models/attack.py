@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-'''module that defines save class'''
+'''module that defines attack class'''
 
 
 class Attack():
-    '''class to define a save'''
+    '''class to define an attack'''
     def __init__(self, damage, range=None, requirements={}, animation=''):
         '''method to be called upon object instantiation'''
         if range is not None:
