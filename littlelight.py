@@ -75,7 +75,7 @@ def main():
             pygame.display.update()
         return False
 
-    def charCreate(save_id, player):
+    def charCreate(save, player):
         '''Allows the user to create a character'''
         done = False
         s_points = 6
