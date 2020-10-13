@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''module that defines save class'''
-from base_model import Base
+from models.base_model import Base
 
 
 
@@ -13,5 +13,5 @@ class Save(Base):
     def __init__(self):
         '''method to be called upon object instantiation'''
         self.save_id = self.__saves
-        self.__saves = save.id
+        self.__saves = self.save_id + 1
         self.__achievements = []

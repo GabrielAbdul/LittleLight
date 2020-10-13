@@ -20,7 +20,7 @@ class button(pygame.Rect):
         '''draws the rectangle'''
         pygame.draw.rect(self.gameDisplay, (255, 150, 0), self.rect, 0)
 
-    def addText(self, text):
+    def addText(self, text, offset=0):
         '''adds text to the button'''
         self.font = pygame.font.SysFont('Arial', 25)
-        self.gameDisplay.blit(self.font.render(text, True, (255, 0, 0)), (self.left + self.width / 3, self.top))
+        self.gameDisplay.blit(self.font.render(text, True, (255, 0, 0)), ((self.left + self.width / 3) - offset, self.top))
