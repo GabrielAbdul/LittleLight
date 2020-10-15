@@ -15,10 +15,10 @@ def main():
 
     mainMenu = pygame.image.load('images/menu1.jpg')
     contMenu = pygame.image.load('images/menu2.jpg')
-    newMenu = pygame.image.load('images/menu3.jpg')
+    # newMenu = pygame.image.load('images/menu3.jpg')
     size = (width, height) = mainMenu.get_size()
     pygame.transform.scale(contMenu, (width, height))
-    pygame.transform.scale(newMenu, (width, height))
+    # pygame.transform.scale(newMenu, (width, height))
 
     gameDisplay = pygame.display.set_mode(size)
     gameDisplay.fill((0, 0, 0))
@@ -35,7 +35,7 @@ def main():
 
     def displayMenu(name):
         '''Displays a menu'''
-        menus = {'main': mainMenu, 'continue': contMenu, 'newgame': newMenu, 'pause': 'placeholder'}
+        menus = {'main': mainMenu, 'continue': contMenu, 'pause': 'placeholder'}
         try:
             gameDisplay.blit(menus.get(name), (0, 0))
         except Exception:
@@ -48,7 +48,7 @@ def main():
             cont.addText('Continue')
             ext.draw()
             ext.addText('Exit')
-        elif name == 'newgame':
+        elif name == 'continue':
             save_01.draw()
             save_01.addText('Save 1', -20)
         return 0
@@ -78,6 +78,9 @@ def main():
     def charCreate(save, player):
         '''Allows the user to create a character'''
         done = False
+        sprite = pygame.image.load('images/sprites/Sprite1standright.png').convert_alpha()
+        sprite = pygame.transform.scale(sprite, (400, 400))
+        print(sprite.get_size())
         s_points = 6
         s_points_button = button([width - 250, 10, 200, 30])
         str_d = button([width - 300, 50, 25, 25])
@@ -91,7 +94,8 @@ def main():
         glo_u = button([width - 75, 120, 25, 25])
         d = button([width - 200, height - 30, 175, 25])
         while not done:
-            gameDisplay.fill((0, 0, 0))
+            gameDisplay.fill((4, 19, 19))
+            gameDisplay.blit(sprite, (50, 100))
             s_points_button.draw()
             s_points_button.addText('Skill Points: ' + str(s_points), 25)
             str_d.draw()
@@ -175,9 +179,6 @@ def main():
                     elif cont.rect.collidepoint(pos):
                         menu = 'continue'
                     elif newGame.rect.collidepoint(pos):
-                        menu = 'newgame'
-                elif menu == 'newgame':
-                    if save_01.rect.collidepoint(pos):
                         print('debug')
                         from models.player import Player
                         from models.save import Save
