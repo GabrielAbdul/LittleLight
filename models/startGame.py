@@ -27,11 +27,6 @@ def startGame(gameDisplay, save, player, clock):
             player.control(0, 0)
         if keys[pygame.K_UP] or keys[pygame.K_w]:
                     print('jump')
-        # if event.type == pygame.KEYUP:
-            # if event.key == pygame.K_LEFT or event.key == ord('a'):
-                # player.control(0, 0)
-            # if event.key == pygame.K_RIGHT or event.key == ord('d'):
-                # player.control(0, 0)
         player.update()
         pygame.display.flip()
         clock.tick(20)
