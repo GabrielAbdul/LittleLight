@@ -38,8 +38,8 @@ class Player(pygame.sprite.Sprite):
 
     def control(self, x, y):
         '''Allows the player to control the character'''
-        self.movex += x
-        self.movey += y
+        self.movex = x
+        self.movey = y
 
     def update(self):
         '''Update sprite position'''
