@@ -8,7 +8,7 @@ def startGame(gameDisplay, save, player, clock):
     player.rect.y = 576
     player_list = pygame.sprite.Group()
     player_list.add(player)
-    steps = 10 # pixels to move per step
+    steps = 5 # pixels to move per step
     while not done:
         gameDisplay.fill((0, 0, 0))
         player_list.draw(gameDisplay)
@@ -31,7 +31,7 @@ def startGame(gameDisplay, save, player, clock):
                     print('jump')
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == ord('a'):
-                    player.control(steps, 0)
+                    player.control(0, 0)
                 if event.key == pygame.K_RIGHT or event.key == ord('d'):
-                    player.control(-steps, 0)
+                    player.control(0, 0)
     return done
