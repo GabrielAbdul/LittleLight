@@ -7,6 +7,8 @@ import os
 
 class Player(pygame.sprite.Sprite):
     '''class to define a player'''
+    steps = 5 # Number of pixels per step. Repeated in startGame if needs changing
+
     def __init__(self):
         '''method to be called upon object instantiation'''
         super().__init__()
@@ -27,6 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.strength = 1
         self.agility = 1
         self.glow = 1
+        self.prevx = self.movex
 
     def getStats(self):
         '''returns a dictionary of player stats'''
@@ -38,6 +41,10 @@ class Player(pygame.sprite.Sprite):
 
     def control(self, x, y):
         '''Allows the player to control the character'''
+        if (self.prevx < 0 and self.movex > 0 and x == 0) or (self.prevx > 0 and self.movex < 0 and x == 0):
+            self.movex = self.prevx
+            return
+        self.prevx = self.movex
         self.movex = x
         self.movey = y
 
