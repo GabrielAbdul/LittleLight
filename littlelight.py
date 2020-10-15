@@ -5,8 +5,7 @@ from models.button import button
 
 def main():
     '''Basic game loop'''
-    global toolsCanvas, gameDisplay, paused, player, save
-    paused = True
+    global toolsCanvas, gameDisplay, player, save
     toolsCanvas = pygame.Surface((700, 120))
     pygame.init()
 
@@ -52,28 +51,6 @@ def main():
             save_01.draw()
             save_01.addText('Save 1', -20)
         return 0
-
-    def pause_game():
-        '''function to pause the game, should be within main game loop'''
-        paused = True
-        while paused:
-            gameDisplay.fill((0, 0, 0))
-            resume = button([width / 3, (height / 2) + 50, width / 3, 40])
-            quit = button([width / 3, (height / 2) + 100, width / 3, 40])
-            quit.addText('Quit')
-            resume.addText('Resume')
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
-                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    pos = pygame.mouse.get_pos()
-                    if quit.rect.collidepoint(pos):
-                        return True
-                    elif resume.rect.collidepoint(pos):
-                        paused = False
-            pygame.display.update()
-        return False
 
     def charCreate(save, player):
         '''Allows the user to create a character'''
@@ -168,7 +145,7 @@ def main():
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_ESCAPE]:
                     if menu == 'main':
-                        done = pause_game()
+                        done = pause_game(gameDisplay)
                     elif menu == 'continue' or menu == 'newgame':
                         menu = 'main'
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -182,17 +159,41 @@ def main():
                         print('debug')
                         from models.player import Player
                         from models.save import Save
+                        from models.startGame import startGame
                         player = Player()
                         save = Save()
                         charCreate(save, player)
                         player.health = player.strength * 5 + player.glow * 2
-                        # startGame(save, player)
+                        done = startGame(gameDisplay, save, player, clock)
                         print(player.getStats())
-                        pygame.quit()
-                        quit()
+                        if done:
+                            pygame.quit()
+                            quit()
         pygame.display.flip()
         clock.tick(20)
 
+def pause_game(gameDisplay):
+    '''function to pause the game, should be within main game loop'''
+    paused = True
+    width, height = 960, 640
+    while paused:
+        gameDisplay.fill((0, 0, 0))
+        resume = button([width / 3, (height / 2) + 50, width / 3, 40])
+        quit = button([width / 3, (height / 2) + 100, width / 3, 40])
+        quit.addText('Quit')
+        resume.addText('Resume')
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                if quit.rect.collidepoint(pos):
+                    return True
+                elif resume.rect.collidepoint(pos):
+                    paused = False
+        pygame.display.update()
+    return False
 
 if __name__ == '__main__':
     main()
