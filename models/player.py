@@ -33,11 +33,14 @@ class Player(pygame.sprite.Sprite):
 
     def getStats(self):
         '''returns a dictionary of player stats'''
-        res = self.__dict__.copy()
-        del res['images']
-        del res['image']
-        del res['rect']
+        tmp = self.__dict__.copy()
+        res = {'health': tmp.get('health'), 'strength': tmp.get('strength'), 'agility': tmp.get('agility'), 'glow': tmp.get('glow')}
         return res
+
+    def updateStats(self, **dictionary):
+        '''updates players stats'''
+        for key, val in dictionary:
+            setattr(self, key, val)
 
     def control(self, x, y):
         '''Allows the player to control the character'''

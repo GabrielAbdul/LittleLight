@@ -1,7 +1,7 @@
 import pygame
 
 
-def startGame(gameDisplay, save, player, clock):
+def startGame(gameDisplay, player, clock, save=None):
     '''runs the main game'''
     done = False
     player.rect.x = 0

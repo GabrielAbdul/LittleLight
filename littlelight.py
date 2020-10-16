@@ -155,16 +155,24 @@ def main():
                         done = True
                     elif cont.rect.collidepoint(pos):
                         menu = 'continue'
+                        if save_01.rect.collidepoint(pos):
+                            save = storage.load_save()
+                            player = save[0].get('player')
+                            map = save[0].get('map')
+                            done = startGame(gameDisplay, player, save, clock)
+
                     elif newGame.rect.collidepoint(pos):
                         print('debug')
                         from models.player import Player
-                        from models.save import Save
                         from models.startGame import startGame
+                        from models.save import Save
                         player = Player()
                         save = Save()
                         charCreate(save, player)
                         player.health = player.strength * 5 + player.glow * 2
-                        done = startGame(gameDisplay, save, player, clock)
+                        save.objects.append(player.getStats())
+                        save.save()
+                        done = startGame(gameDisplay, player, clock)
                         print(player.getStats())
                         if done:
                             pygame.quit()

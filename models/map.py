@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 '''module that defines save class'''
-from base_model import Base
 
 
 
-class Map(Base):
+class Map():
     '''class to define a map'''
 
     def __init__(self):
