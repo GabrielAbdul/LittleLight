@@ -12,9 +12,10 @@ def main():
     done = False
     pygame.display.set_caption('Little Light')
 
-    mainMenu = pygame.image.load('images/menu1.jpg')
+    mainMenu = pygame.image.load('images/menu1.png')
     contMenu = pygame.image.load('images/menu2.jpg')
     # newMenu = pygame.image.load('images/menu3.jpg')
+    mainMenu = pygame.transform.scale(mainMenu, (960, 640))
     size = (width, height) = mainMenu.get_size()
     pygame.transform.scale(contMenu, (width, height))
     # pygame.transform.scale(newMenu, (width, height))
@@ -25,9 +26,9 @@ def main():
     menu = 'main'
 
     # buttons
-    newGame = button([width / 3, height / 2 + 50, width / 3, 40], gameDisplay)
-    cont = button([width / 3, height / 2 + 100, width / 3, 40], gameDisplay)
-    ext = button([width / 3, (height / 2) + 150, width / 3, 40], gameDisplay)
+    newGame = button([width / 3, height / 2 + 50, width / 3, 40], gameDisplay, (0, 0, 0))
+    cont = button([width / 3, height / 2 + 100, width / 3, 40], gameDisplay, (0, 0, 0))
+    ext = button([width / 3, (height / 2) + 150, width / 3, 40], gameDisplay, (0, 0, 0))
     save_01 = button([width / 3, height / 2 - 100, width / 3, 40], gameDisplay)
 
     print("w/h: {}/{}".format(width, height))
@@ -71,7 +72,7 @@ def main():
         glo_u = button([width - 75, 120, 25, 25])
         d = button([width - 200, height - 30, 175, 25])
         while not done:
-            gameDisplay.fill((4, 19, 19))
+            gameDisplay.fill((14, 20, 22))
             gameDisplay.blit(sprite, (50, 100))
             s_points_button.draw()
             s_points_button.addText('Skill Points: ' + str(s_points), 25)
@@ -193,8 +194,11 @@ def pause_game(gameDisplay):
     '''function to pause the game, should be within main game loop'''
     paused = True
     width, height = 960, 640
+    ps = pygame.image.load('images/pausemenu.png').convert()
+    ps = pygame.transform.scale(ps, (960, 640))
     while paused:
         gameDisplay.fill((0, 0, 0))
+        gameDisplay.blit(ps, (0,0))
         resume = button([width / 3, (height / 2) + 50, width / 3, 40])
         quit = button([width / 3, (height / 2) + 100, width / 3, 40])
         quit.addText('Quit')

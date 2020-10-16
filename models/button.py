@@ -5,7 +5,7 @@ import pygame
 class button(pygame.Rect):
     '''Creates a rectangular button'''
     __gameDisplay = None
-    def __init__(self, args, gameDisplay=None):
+    def __init__(self, args, gameDisplay=None, color=(255, 0, 0)):
         '''initializes a rectangle with values'''
         if self.__gameDisplay is None and gameDisplay is None:
             exit(2)
@@ -15,6 +15,7 @@ class button(pygame.Rect):
             button.__gameDisplay = self.gameDisplay = gameDisplay
         else:
             self.gameDisplay = button.__gameDisplay
+        self.color = color
 
     def draw(self):
         '''draws the rectangle'''
@@ -23,4 +24,4 @@ class button(pygame.Rect):
     def addText(self, text, offset=0):
         '''adds text to the button'''
         self.font = pygame.font.SysFont('Arial', 25)
-        self.gameDisplay.blit(self.font.render(text, True, (255, 0, 0)), ((self.left + self.width / 3) - offset, self.top))
+        self.gameDisplay.blit(self.font.render(text, True, self.color), ((self.left + self.width / 3) - offset, self.top))
