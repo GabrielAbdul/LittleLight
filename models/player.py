@@ -7,7 +7,7 @@ import os
 
 class Player(pygame.sprite.Sprite):
     '''class to define a player'''
-    steps = 5 # Number of pixels per step. Repeated in startGame if needs changing
+    steps = 2 # Number of pixels per step. Repeated in startGame if needs changing
 
     def __init__(self):
         '''method to be called upon object instantiation'''
@@ -59,9 +59,9 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.movey
         if self.movex > 0: # moving right
             self.frame += 1
-            if self.frame > self.__ani:
+            if self.frame > 3 * self.__ani:
                 self.frame = 1
-            self.image = self.images[self.frame]
+            self.image = self.images[self.frame // 3]
         if self.movex == 0:
             self.frame = 0
             if self.prevx2 >= 0:
@@ -70,6 +70,6 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.images[0], True, False)
         if self.movex < 0: # moving left
             self.frame += 1
-            if self.frame > self.__ani:
+            if self.frame > 3 * self.__ani:
                 self.frame = 1
-            self.image = pygame.transform.flip(self.images[self.frame], True, False)
+            self.image = pygame.transform.flip(self.images[self.frame // 3], True, False)

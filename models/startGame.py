@@ -8,7 +8,7 @@ def startGame(gameDisplay, save, player, clock):
     player.rect.y = 576
     player_list = pygame.sprite.Group()
     player_list.add(player)
-    steps = 5 # pixels to move per step
+    steps = 2 # pixels to move per step
     while not done:
         gameDisplay.fill((0, 0, 0))
         for event in pygame.event.get():
@@ -29,5 +29,5 @@ def startGame(gameDisplay, save, player, clock):
         player.update()
         player_list.draw(gameDisplay)
         pygame.display.flip()
-        clock.tick(20)
+        clock.tick(60)
     return done
