@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 '''module that defines player class'''
-from models.base_model import Base
 import pygame
-import os
 
 
 class Player(pygame.sprite.Sprite):
     '''class to define a player'''
     steps = 2 # Number of pixels per step. Repeated in startGame if needs changing
-    jump_count = 0
-    hang_count = 0
+    jump_count = 0 # counter for jump time
+    hang_count = 0 # counter for hang time after jumping
 
     def __init__(self):
         '''method to be called upon object instantiation'''
@@ -26,18 +24,18 @@ class Player(pygame.sprite.Sprite):
         self.__ani = 8
         self.image = self.images[0]
         self.rect = self.image.get_rect()
-        self.movex = 0
-        self.movey = 0
-        self.frame = 0
+        self.movex = 0 # x-axis movement: positive=right, negative=left
+        self.movey = 0 # y-axis movement: positive=down, negative=up
+        self.frame = 0 # sprite frame
         self.health = 0
         self.strength = 1
         self.agility = 1
         self.glow = 1
-        self.prevx = self.movex
-        self.prevx2 = 0
-        self.falling = True
-        self.jumping = False
-        self.hang = False
+        self.prevx = self.movex # logging previous x
+        self.prevx2 = 0 # logging idle direction
+        self.falling = True # Is the player falling
+        self.jumping = False # Is the player jumping
+        self.hang = False # Is the player hangin in the air
 
     def getStats(self):
         '''returns a dictionary of player stats'''
@@ -56,10 +54,10 @@ class Player(pygame.sprite.Sprite):
     def control(self, x, y):
         '''Allows the player to control the character'''
         if (self.prevx < 0 and self.movex > 0 and x == 0) or (self.prevx > 0 and self.movex < 0 and x == 0):
-            self.movex = self.prevx
+            self.movex = self.prevx # Smoothing out movement when multiple keys pressed
             return
         if self.prevx != 0:
-            self.prevx2 = self.prevx
+            self.prevx2 = self.prevx # Logging last direction faced
         self.prevx = self.movex
         self.movex = x
         self.movey = y
@@ -68,34 +66,34 @@ class Player(pygame.sprite.Sprite):
         '''Update sprite position'''
         if self.movex > 0: # moving right
             self.frame += 1
-            if self.frame > 3 * self.__ani:
+            if self.frame > 3 * self.__ani: # pausing on each frame for 3 ticks due to gamespeed
                 self.frame = 1
-            self.image = self.images[self.frame // 3]
+            self.image = self.images[self.frame // 3] # '//' to ensure int and not float
         if self.movex == 0:
             self.frame = 0
             if self.prevx2 >= 0:
-                self.image = self.images[0]
+                self.image = self.images[0] # If facing right, use right idle frame
             else:
                 self.image = pygame.transform.flip(self.images[0], True, False)
         if self.movex < 0: # moving left
             self.frame += 1
-            if self.frame > 3 * self.__ani:
+            if self.frame > 3 * self.__ani: # pausing on each frame for 3 ticks due to gamespeed
                 self.frame = 1
-            self.image = pygame.transform.flip(self.images[self.frame // 3], True, False)
-        if self.jumping and self.falling is False:
+            self.image = pygame.transform.flip(self.images[self.frame // 3], True, False) # '//' to ensure int and not float, transform flips right sprite to left
+        if self.jumping and self.falling is False: # If the user is jumping. Falling check is redundant
             self.jump_count += 1
-            if self.jump_count >= 15:
+            if self.jump_count >= 15: # Timer for upward movement
                 self.jumping = False
                 self.jump_count = 0
                 self.hang = True
                 self.hang_count = 1
-        elif self.hang is True and self.hang_count <= 6:
+        elif self.hang is True and self.hang_count <= 6: # Hang time after jumping before falling: user makes a sharp parabola instead of triangle
             self.hang_count += 1
-        else:
+        else: # Make user start falling
             self.falling = True
             self.hang = False
             self.hang_count = 0
-        if self.rect.bottom >= 640:
+        if self.rect.bottom >= 640: # Temporary magic number, pending map and ground
             self.rect.bottom = 640
             self.movey = 0
             self.jumping = False
@@ -105,12 +103,12 @@ class Player(pygame.sprite.Sprite):
 
     def gravity(self):
         if self.falling:
-            self.movey += 5
+            self.movey += 5 # Fall faster than jump, looks better imo
         if self.jumping:
             self.movey -= 4
 
     def jump(self):
-        if self.falling is False and self.jumping is False and self.hang is False:
+        if self.falling is False and self.jumping is False and self.hang is False: # Don't want user infini-jumping from midair. Could implement double jump later
             self.jumping = True
             self.falling = False
             self.rect.y -= 10
