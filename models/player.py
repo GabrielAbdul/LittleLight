@@ -43,9 +43,9 @@ class Player(pygame.sprite.Sprite):
                 'glow': tmp.get('glow')}
         return res
 
-    def updateStats(self, **dict):
+    def updateStats(self, dict):
         '''method that updates stats'''
-        for key, val in dict:
+        for key, val in eval(dict).items():
             setattr(self, key, val)
 
     def control(self, x, y):

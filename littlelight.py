@@ -1,4 +1,4 @@
-import random, pygame, sys, time
+import random, pygame, sys, time, json
 from models.button import button
 '''Starts the game Little Light'''
 
@@ -155,17 +155,12 @@ def main():
                         done = True
                     elif cont.rect.collidepoint(pos):
                         menu = 'continue'
-                        if save_01.rect.collidepoint(pos):
-                            save = storage.load_save()
-                            player = save[0].get('player')
-                            map = save[0].get('map')
-                            done = startGame(gameDisplay, player, save, clock)
 
                     elif newGame.rect.collidepoint(pos):
                         print('debug')
-                        from models.player import Player
                         from models.startGame import startGame
                         from models.save import Save
+                        from models.player import Player
                         player = Player()
                         save = Save()
                         charCreate(save, player)
@@ -177,6 +172,20 @@ def main():
                         if done:
                             pygame.quit()
                             quit()
+                if menu == 'continue':
+                    if save_01.rect.collidepoint(pos):
+                        from models.player import Player
+                        from models.startGame import startGame
+                        from models import storage
+                        player = Player()
+                        save = storage.load_save()
+                        player.updateStats(json.dumps(save[0]))
+                        print(player.getStats())
+                        done = startGame(gameDisplay, player, clock, save)
+                        if done:
+                            pygame.quit()
+                            quit()
+
         pygame.display.flip()
         clock.tick(20)
 
