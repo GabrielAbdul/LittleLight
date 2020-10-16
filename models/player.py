@@ -12,14 +12,16 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         '''method to be called upon object instantiation'''
         super().__init__()
-        img = pygame.image.load('images/sprites/Sprite1standright.png').convert()
-        img1 = pygame.image.load('images/sprites/Sprite1stepright.png').convert()
+        img = pygame.image.load('images/sprites/Sprite1standright.png').convert_alpha()
+        img1 = pygame.image.load('images/sprites/Sprite1stepright.png').convert_alpha()
+        img1.convert_alpha()
         self.images = []
         self.images.append(img)
         self.images.append(img1)
         for i in range(2, 9):
-            img = pygame.image.load('images/sprites/Sprite1stepright' + str(i) + '.png').convert()
+            img = pygame.image.load('images/sprites/Sprite1stepright' + str(i) + '.png').convert_alpha()
             self.images.append(img)
+        self.__ani = 8
         self.image = self.images[0]
         self.rect = self.image.get_rect()
         self.movex = 0
@@ -30,6 +32,7 @@ class Player(pygame.sprite.Sprite):
         self.agility = 1
         self.glow = 1
         self.prevx = self.movex
+        self.prevx2 = 0
 
     def getStats(self):
         '''returns a dictionary of player stats'''
@@ -44,6 +47,8 @@ class Player(pygame.sprite.Sprite):
         if (self.prevx < 0 and self.movex > 0 and x == 0) or (self.prevx > 0 and self.movex < 0 and x == 0):
             self.movex = self.prevx
             return
+        if self.prevx != 0:
+            self.prevx2 = self.prevx
         self.prevx = self.movex
         self.movex = x
         self.movey = y
@@ -52,3 +57,19 @@ class Player(pygame.sprite.Sprite):
         '''Update sprite position'''
         self.rect.x += self.movex
         self.rect.y += self.movey
+        if self.movex > 0: # moving right
+            self.frame += 1
+            if self.frame > self.__ani:
+                self.frame = 1
+            self.image = self.images[self.frame]
+        if self.movex == 0:
+            self.frame = 0
+            if self.prevx2 >= 0:
+                self.image = self.images[0]
+            else:
+                self.image = pygame.transform.flip(self.images[0], True, False)
+        if self.movex < 0: # moving left
+            self.frame += 1
+            if self.frame > self.__ani:
+                self.frame = 1
+            self.image = pygame.transform.flip(self.images[self.frame], True, False)

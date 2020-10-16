@@ -11,7 +11,6 @@ def startGame(gameDisplay, save, player, clock):
     steps = 5 # pixels to move per step
     while not done:
         gameDisplay.fill((0, 0, 0))
-        player_list.draw(gameDisplay)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
@@ -28,6 +27,7 @@ def startGame(gameDisplay, save, player, clock):
         if keys[pygame.K_UP] or keys[pygame.K_w]:
                     print('jump')
         player.update()
+        player_list.draw(gameDisplay)
         pygame.display.flip()
         clock.tick(20)
     return done
