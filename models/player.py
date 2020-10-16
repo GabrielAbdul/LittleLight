@@ -8,6 +8,8 @@ import os
 class Player(pygame.sprite.Sprite):
     '''class to define a player'''
     steps = 2 # Number of pixels per step. Repeated in startGame if needs changing
+    jump_count = 0
+    hang_count = 0
 
     def __init__(self):
         '''method to be called upon object instantiation'''
@@ -33,6 +35,9 @@ class Player(pygame.sprite.Sprite):
         self.glow = 1
         self.prevx = self.movex
         self.prevx2 = 0
+        self.falling = True
+        self.jumping = False
+        self.hang = False
 
     def getStats(self):
         '''returns a dictionary of player stats'''
@@ -61,8 +66,6 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         '''Update sprite position'''
-        self.rect.x += self.movex
-        self.rect.y += self.movey
         if self.movex > 0: # moving right
             self.frame += 1
             if self.frame > 3 * self.__ani:
@@ -79,10 +82,35 @@ class Player(pygame.sprite.Sprite):
             if self.frame > 3 * self.__ani:
                 self.frame = 1
             self.image = pygame.transform.flip(self.images[self.frame // 3], True, False)
+        if self.jumping and self.falling is False:
+            self.jump_count += 1
+            if self.jump_count >= 15:
+                self.jumping = False
+                self.jump_count = 0
+                self.hang = True
+                self.hang_count = 1
+        elif self.hang is True and self.hang_count <= 6:
+            self.hang_count += 1
+        else:
+            self.falling = True
+            self.hang = False
+            self.hang_count = 0
+        if self.rect.bottom >= 640:
+            self.rect.bottom = 640
+            self.movey = 0
+            self.jumping = False
+            self.falling = False
+        self.rect.x += self.movex
+        self.rect.y += self.movey
 
     def gravity(self):
-        if self.rect.y >= 576:
-            self.rect.y = 576
-            self.movey = 0
-        else:
-            self.movey += 3.2
+        if self.falling:
+            self.movey += 5
+        if self.jumping:
+            self.movey -= 4
+
+    def jump(self):
+        if self.falling is False and self.jumping is False and self.hang is False:
+            self.jumping = True
+            self.falling = False
+            self.rect.y -= 10

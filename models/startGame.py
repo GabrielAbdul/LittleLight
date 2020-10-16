@@ -25,7 +25,7 @@ def startGame(gameDisplay, player, clock, save=None):
         if not (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and not (keys[pygame.K_LEFT] or keys[pygame.K_a]):
             player.control(0, 0)
         if keys[pygame.K_UP] or keys[pygame.K_w]:
-                    print('jump')
+            player.jump()
         player.gravity()
         player.update()
         player_list.draw(gameDisplay)
