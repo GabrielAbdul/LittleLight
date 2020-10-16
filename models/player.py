@@ -79,3 +79,10 @@ class Player(pygame.sprite.Sprite):
             if self.frame > 3 * self.__ani:
                 self.frame = 1
             self.image = pygame.transform.flip(self.images[self.frame // 3], True, False)
+
+    def gravity(self):
+        if self.rect.y >= 576:
+            self.rect.y = 576
+            self.movey = 0
+        else:
+            self.movey += 3.2

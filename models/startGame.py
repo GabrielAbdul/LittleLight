@@ -5,7 +5,7 @@ def startGame(gameDisplay, player, clock, save=None):
     '''runs the main game'''
     done = False
     player.rect.x = 0
-    player.rect.y = 576
+    player.rect.y = 500
     player_list = pygame.sprite.Group()
     player_list.add(player)
     steps = 2 # pixels to move per step
@@ -26,6 +26,7 @@ def startGame(gameDisplay, player, clock, save=None):
             player.control(0, 0)
         if keys[pygame.K_UP] or keys[pygame.K_w]:
                     print('jump')
+        player.gravity()
         player.update()
         player_list.draw(gameDisplay)
         pygame.display.flip()
