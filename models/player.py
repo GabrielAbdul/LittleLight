@@ -98,6 +98,10 @@ class Player(pygame.sprite.Sprite):
             self.movey = 0
             self.jumping = False
             self.falling = False
+        if self.rect.right >= 960:
+            self.rect.right = 960
+        if self.rect.left <= 0:
+            self.rect.left = 0
         self.rect.x += self.movex
         self.rect.y += self.movey
 
