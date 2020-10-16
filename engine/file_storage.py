@@ -8,25 +8,25 @@ class FileStorage():
     '''class FileStorage'''
 
     # path to save game file
-    __file_path = 'save_game.py'
+    __file_path = 'save_game.json'
 
     @staticmethod
     def save(save_game):
         '''FileStorage module to create a saved game'''
 #        save_game.__achievements.append(achievement.check_achievements())
-        with open('save_game.py', 'w') as file:
+        with open('save_game.json', 'w') as file:
             json.dump(save_game, file)
 
     @staticmethod
     def load_save():
         '''FileStorage method to load a saved game'''
-        with open('save_game.py', 'rb') as file:
+        with open('save_game.json', 'rb') as file:
             return json.load(file)
 
     @staticmethod
     def delete_save(save_game):
         '''FileStorage method to delete previous saved game'''
-        if os.path.exists('save_game.py'):
-            os.remove('save_game.py')
+        if os.path.exists('save_game.json'):
+            os.remove('save_game.json')
         else:
             print('No save data found')
