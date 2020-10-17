@@ -28,6 +28,7 @@ class Player(pygame.sprite.Sprite):
         self.movey = 0 # y-axis movement: positive=down, negative=up
         self.frame = 0 # sprite frame
         self.health = 0
+        self.curr_health = 0
         self.strength = 1
         self.agility = 1
         self.glow = 1
@@ -36,11 +37,13 @@ class Player(pygame.sprite.Sprite):
         self.falling = True # Is the player falling
         self.jumping = False # Is the player jumping
         self.hang = False # Is the player hangin in the air
+        self.i_frame = 0
 
     def getStats(self):
         '''returns a dictionary of player stats'''
         tmp = self.__dict__.copy()
         res = {'health': tmp.get('health'),
+               'curr_health': tmp.get('curr_health'),
                 'agility': tmp.get('agility'),
                 'strength': tmp.get('strength'),
                 'glow': tmp.get('glow')}
@@ -62,7 +65,7 @@ class Player(pygame.sprite.Sprite):
         self.movex = x
         self.movey = y
 
-    def update(self):
+    def update(self, enemy_list):
         '''Update sprite position'''
         if self.movex > 0: # moving right
             self.frame += 1
@@ -80,6 +83,12 @@ class Player(pygame.sprite.Sprite):
             if self.frame > 3 * self.__ani: # pausing on each frame for 3 ticks due to gamespeed
                 self.frame = 1
             self.image = pygame.transform.flip(self.images[self.frame // 3], True, False) # '//' to ensure int and not float, transform flips right sprite to left
+        if self.i_frame > 0:
+            self.image = pygame.image.load('images/sprites/Sprite1hitright.png').convert_alpha()
+            if self.i_frame > 10 and self.i_frame < 30:
+                self.image.set_alpha(0)
+            else:
+                self.image.set_alpha(255)
         if self.jumping and self.falling is False: # If the user is jumping. Falling check is redundant
             self.jump_count += 1
             if self.jump_count >= 15: # Timer for upward movement
@@ -104,6 +113,19 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
         self.rect.x += self.movex
         self.rect.y += self.movey
+        hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
+        for enemy in hit_list:
+            if self.i_frame == 0 and not self.falling:
+                self.curr_health -= 1
+                self.i_frame = 60
+                print(self.curr_health)
+                break
+            elif self.falling:
+                self.falling = False
+                self.jump()
+                enemy_list.remove(enemy)
+        if self.i_frame > 0:
+            self.i_frame -= 1
 
     def gravity(self):
         if self.falling:
