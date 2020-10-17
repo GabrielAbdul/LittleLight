@@ -83,6 +83,12 @@ class Player(pygame.sprite.Sprite):
             if self.frame > 3 * self.__ani: # pausing on each frame for 3 ticks due to gamespeed
                 self.frame = 1
             self.image = pygame.transform.flip(self.images[self.frame // 3], True, False) # '//' to ensure int and not float, transform flips right sprite to left
+        if self.i_frame > 0:
+            self.image = pygame.image.load('images/sprites/Sprite1hitright.png').convert_alpha()
+            if self.i_frame > 10 and self.i_frame < 30:
+                self.image.set_alpha(0)
+            else:
+                self.image.set_alpha(255)
         if self.jumping and self.falling is False: # If the user is jumping. Falling check is redundant
             self.jump_count += 1
             if self.jump_count >= 15: # Timer for upward movement
