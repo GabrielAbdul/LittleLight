@@ -166,6 +166,7 @@ def main():
                         save = Save()
                         charCreate(save, player)
                         player.health = player.strength * 5 + player.glow * 2
+                        player.curr_health = player.health
                         save.objects.append(player.getStats())
                         save.save()
                         done = startGame(gameDisplay, player, clock)
@@ -194,14 +195,14 @@ def pause_game(gameDisplay):
     '''function to pause the game, should be within main game loop'''
     paused = True
     width, height = 960, 640
-    ps = pygame.image.load('images/pausemenu.png').convert()
+    ps = pygame.image.load('images/pausemenu.png').convert_alpha()
     ps = pygame.transform.scale(ps, (960, 640))
     while paused:
-        gameDisplay.fill((0, 0, 0))
+        # gameDisplay.fill((0, 0, 0))
         gameDisplay.blit(ps, (0,0))
-        resume = button([width / 3, (height / 2) + 50, width / 3, 40])
-        quit = button([width / 3, (height / 2) + 100, width / 3, 40])
-        quit.addText('Quit')
+        resume = button([width / 3 + 50, (height // 3), (width / 3) - 100, 40], None, (255, 255, 255))
+        quit = button([width / 3 + 50, (height // 3) + 50, (width / 3) - 100, 40], None, (255, 255, 255))
+        quit.addText('Quit', -15)
         resume.addText('Resume')
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
