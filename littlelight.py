@@ -166,6 +166,7 @@ def main():
                         save = Save()
                         charCreate(save, player)
                         player.health = player.strength * 5 + player.glow * 2
+                        player.curr_health = player.health
                         save.objects.append(player.getStats())
                         save.save()
                         done = startGame(gameDisplay, player, clock)
