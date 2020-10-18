@@ -33,9 +33,11 @@ def startGame(gameDisplay, player, clock, save=None):
         enemy_list.draw(gameDisplay)
         for enemy in enemy_list:
             enemy.move()
+            pygame.draw.rect(gameDisplay, (0,255,0), enemy.rect, 2)
         player.gravity() # Make sure gravity affects the player
         player.update(enemy_list) # Update player position
         player_list.draw(gameDisplay) # Redraw player
+        pygame.draw.rect(gameDisplay, (0,255,0), player.rect, 2)
         pygame.display.flip() # Redraw screen with all objects in new position
         clock.tick(60) # 60 fps speed
     return done

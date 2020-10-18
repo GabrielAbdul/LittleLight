@@ -115,15 +115,18 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.movey
         hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
         for enemy in hit_list:
-            if self.i_frame == 0 and not self.falling:
-                self.curr_health -= 1
-                self.i_frame = 60
-                print(self.curr_health)
-                break
+            if self.i_frame == 0 and (not self.falling and not self.hang):
+                if enemy.rect.right >= self.rect.left + 40 and enemy.rect.left <= self.rect.right - 40:
+                    print("e_right: {}, e_left: {}, p_right: {}, p_left: {}".format(enemy.rect.right, enemy.rect.left, self.rect.right, self.rect.left))
+                    self.curr_health -= 1
+                    self.i_frame = 60
+                    print(self.curr_health)
+                    break
             elif self.falling:
-                self.falling = False
-                self.jump()
-                enemy_list.remove(enemy)
+                if (enemy.rect.right >= self.rect.left + 40 and enemy.rect.left <= self.rect.right - 40) and self.rect.bottom >= enemy.rect.bottom + (enemy.rect.top - enemy.rect.bottom) // 2:
+                    self.falling = False
+                    self.jump()
+                    enemy_list.remove(enemy)
         if self.i_frame > 0:
             self.i_frame -= 1
 

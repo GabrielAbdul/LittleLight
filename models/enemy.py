@@ -16,7 +16,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.counter = 0
-        self.spd = 2
+        self.spd = 1
         self.dist = random.randint(60, 80)
         self.walk = True
 
