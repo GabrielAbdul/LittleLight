@@ -124,10 +124,9 @@ class Player(pygame.sprite.Sprite):
                     continue
             if self.i_frame == 0 and (not self.falling and not self.hang):
                 if enemy.rect.right >= self.rect.left + 40 and enemy.rect.left <= self.rect.right - 40 and self.rect.bottom >= enemy.rect.top + 10:
-                    print("e_right: {}, e_left: {}, p_right: {}, p_left: {}".format(enemy.rect.right, enemy.rect.left, self.rect.right, self.rect.left))
                     self.curr_health -= 1
                     self.i_frame = 60
-                    print(self.curr_health)
+                    print("Health: {}/{}".format(self.curr_health, self.health))
                     break
         if self.i_frame > 0:
             self.i_frame -= 1
