@@ -20,6 +20,7 @@ class Enemy(pygame.sprite.Sprite):
         self.dist = random.randint(60, 80)
         self.walk = True
         self.health = 3
+        self.damage = 2
 
     def move(self):
         '''auto-moves the enemy'''

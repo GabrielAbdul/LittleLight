@@ -38,6 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.jumping = False # Is the player jumping
         self.hang = False # Is the player hangin in the air
         self.i_frame = 0
+        self.lives = 3
 
     def getStats(self):
         '''returns a dictionary of player stats'''
@@ -124,12 +125,16 @@ class Player(pygame.sprite.Sprite):
                     continue
             if self.i_frame == 0 and (not self.falling and not self.hang):
                 if enemy.rect.right >= self.rect.left + 40 and enemy.rect.left <= self.rect.right - 40 and self.rect.bottom >= enemy.rect.top + 10:
-                    self.curr_health -= 1
+                    self.curr_health -= enemy.damage
                     self.i_frame = 60
                     print("Health: {}/{}".format(self.curr_health, self.health))
                     break
         if self.i_frame > 0:
             self.i_frame -= 1
+        if self.curr_health <= 0:
+            self.lives -= 1
+            self.curr_health = self.health
+            return True
 
     def gravity(self):
         if self.falling:
