@@ -1,4 +1,5 @@
-import random, pygame, sys, time, json
+import pygame
+import json
 from models.button import button
 '''Starts the game Little Light'''
 
@@ -32,12 +33,21 @@ def main():
     save_01 = button([width / 3, height / 2 - 175, width / 3, 40], gameDisplay)
     save_02 = button([width / 3, height / 2 - 115, width / 3, 40], gameDisplay)
     save_03 = button([width / 3, height / 2 - 55, width / 3, 40], gameDisplay)
+    newGame = button([width / 3, height / 2 + 50, width / 3, 40], gameDisplay,
+                    (0, 0, 0))
+    cont = button([width / 3, height / 2 + 100, width / 3, 40], gameDisplay,
+                    (0, 0, 0))
+    ext = button([width / 3, (height / 2) + 150, width / 3, 40], gameDisplay,
+                    (0, 0, 0))
+    save_01 = button([width / 3, height / 2 - 100, width / 3, 40], gameDisplay)
 
     print("w/h: {}/{}".format(width, height))
 
     def displayMenu(name):
         '''Displays a menu'''
-        menus = {'main': mainMenu, 'continue': contMenu, 'pause': 'placeholder'}
+        menus = {
+            'main': mainMenu, 'continue': contMenu
+        }
         try:
             gameDisplay.blit(menus.get(name), (0, 0))
         except Exception:
@@ -62,7 +72,8 @@ def main():
     def charCreate(save, player):
         '''Allows the user to create a character'''
         done = False
-        sprite = pygame.image.load('images/sprites/Sprite1standright.png').convert_alpha()
+        sprite = pygame.image.load('images/sprites/Sprite1standright.png').\
+        convert_alpha()
         sprite = pygame.transform.scale(sprite, (400, 400))
         print(sprite.get_size())
         s_points = 6
@@ -106,7 +117,8 @@ def main():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                elif event.type == pygame.MOUSEBUTTONDOWN and\
+                event.button == 1:
                     pos = pygame.mouse.get_pos()
                     if d.rect.collidepoint(pos):
                         if s_points == 0:
@@ -139,7 +151,6 @@ def main():
                             player.glow += 1
             pygame.display.flip()
         save.player = player
-
 
     while not done:
         ch = displayMenu(menu)
@@ -223,6 +234,7 @@ def main():
         pygame.display.flip()
         clock.tick(20)
 
+
 def pause_game(gameDisplay):
     '''function to pause the game, should be within main game loop'''
     paused = True
@@ -230,10 +242,12 @@ def pause_game(gameDisplay):
     ps = pygame.image.load('images/pausemenu.png').convert_alpha()
     ps = pygame.transform.scale(ps, (960, 640))
     while paused:
-        # gameDisplay.fill((0, 0, 0))
-        gameDisplay.blit(ps, (0,0))
-        resume = button([width / 3 + 50, (height // 3), (width / 3) - 100, 40], None, (255, 255, 255))
-        quit = button([width / 3 + 50, (height // 3) + 50, (width / 3) - 100, 40], None, (255, 255, 255))
+        gameDisplay.fill((0, 0, 0))
+        gameDisplay.blit(ps, (0, 0))
+        resume = button([width / 3 + 50, (height // 3), (width / 3) - 100, 40],
+                        None, (255, 255, 255))
+        quit = button([width / 3 + 50, (height // 3) + 50, (width / 3) - 100,
+                       40], None, (255, 255, 255))
         quit.addText('Quit', -15)
         resume.addText('Resume')
         for event in pygame.event.get():

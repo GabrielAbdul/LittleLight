@@ -29,7 +29,7 @@ class Save():
     def load(self):
         '''method that will load a game'''
         try:
-           return storage.load_save()
+            return storage.load_save()
         except Exception as e:
             print("Couldn't load save:", e)
 
