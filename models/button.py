@@ -11,7 +11,7 @@ class button(pygame.Rect):
         '''initializes a rectangle with values'''
         if self.__gameDisplay is None and gameDisplay is None:
             exit(2)
-        self.left, self.top, self.width, self.height = args[0], args[1],
+        self.left, self.top, self.width, self.height = args[0], args[1],\
         args[2], args[3]
         self.rect = pygame.Rect(self.left, self.top, self.width, self.height)
         if gameDisplay is not None:

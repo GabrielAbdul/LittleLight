@@ -12,9 +12,9 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         '''method to be called upon object instantiation'''
         super().__init__()
-        img = pygame.image.load('images/sprites/Sprite1standright.png').
+        img = pygame.image.load('images/sprites/Sprite1standright.png').\
         convert_alpha()
-        img1 = pygame.image.load('images/sprites/Sprite1stepright.png').
+        img1 = pygame.image.load('images/sprites/Sprite1stepright.png').\
         convert_alpha()
         img1.convert_alpha()
         self.images = []
@@ -60,7 +60,7 @@ class Player(pygame.sprite.Sprite):
 
     def control(self, x, y):
         '''Allows the player to control the character'''
-        if (self.prevx < 0 and self.movex > 0 and x == 0) or
+        if (self.prevx < 0 and self.movex > 0 and x == 0) or\
         (self.prevx > 0 and self.movex < 0 and x == 0):
             self.movex = self.prevx  # Smooth movement when multiple keys down
             return
@@ -126,8 +126,8 @@ class Player(pygame.sprite.Sprite):
         for enemy in hit_list:
             if self.falling:
                 if (enemy.rect.right >= self.rect.left + 40 and
-                    enemy.rect.left <= self.rect.right - 40) and
-                self.rect.bottom >= enemy.rect.bottom +
+                    enemy.rect.left <= self.rect.right - 40) and\
+                self.rect.bottom >= enemy.rect.bottom +\
                 (enemy.rect.top - enemy.rect.bottom) // 2:
                     self.falling = False
                     self.jump()
@@ -135,8 +135,8 @@ class Player(pygame.sprite.Sprite):
                     self.i_frame = 10
                     continue
             if self.i_frame == 0 and (not self.falling and not self.hang):
-                if enemy.rect.right >= self.rect.left + 40 and
-                enemy.rect.left <= self.rect.right - 40 and
+                if enemy.rect.right >= self.rect.left + 40 and\
+                enemy.rect.left <= self.rect.right - 40 and\
                 self.rect.bottom >= enemy.rect.top + 10:
                     self.curr_health -= enemy.damage
                     self.i_frame = 60
@@ -157,8 +157,8 @@ class Player(pygame.sprite.Sprite):
             self.movey -= 4
 
     def jump(self):
-        if self.falling is False and
-        self.jumping is False and
+        if self.falling is False and\
+        self.jumping is False and\
         self.hang is False:  # Don't want user infini-jumping from midair.
             self.jumping = True
             self.falling = False

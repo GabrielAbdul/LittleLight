@@ -27,7 +27,7 @@ def startGame(gameDisplay, player, clock, save=None):
             player.control(-steps, 0)
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             player.control(steps, 0)
-        if not (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and not
+        if not (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and not\
         (keys[pygame.K_LEFT] or keys[pygame.K_a]):
             player.control(0, 0)  # Wipe movement if no keys are held down
         if keys[pygame.K_UP] or keys[pygame.K_w]:

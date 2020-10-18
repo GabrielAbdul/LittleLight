@@ -28,11 +28,11 @@ def main():
 
     # buttons
     newGame = button([width / 3, height / 2 + 50, width / 3, 40], gameDisplay,
-                     (0, 0, 0))
+                    (0, 0, 0))
     cont = button([width / 3, height / 2 + 100, width / 3, 40], gameDisplay,
-                  (0, 0, 0))
+                    (0, 0, 0))
     ext = button([width / 3, (height / 2) + 150, width / 3, 40], gameDisplay,
-                 (0, 0, 0))
+                    (0, 0, 0))
     save_01 = button([width / 3, height / 2 - 100, width / 3, 40], gameDisplay)
 
     print("w/h: {}/{}".format(width, height))
@@ -62,7 +62,7 @@ def main():
     def charCreate(save, player):
         '''Allows the user to create a character'''
         done = False
-        sprite = pygame.image.load('images/sprites/Sprite1standright.png').
+        sprite = pygame.image.load('images/sprites/Sprite1standright.png').\
         convert_alpha()
         sprite = pygame.transform.scale(sprite, (400, 400))
         print(sprite.get_size())
@@ -107,7 +107,7 @@ def main():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                elif event.type == pygame.MOUSEBUTTONDOWN and
+                elif event.type == pygame.MOUSEBUTTONDOWN and\
                 event.button == 1:
                     pos = pygame.mouse.get_pos()
                     if d.rect.collidepoint(pos):
