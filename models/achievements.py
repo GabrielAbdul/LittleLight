@@ -1,4 +1,6 @@
-import pygame, random, time
+import pygame
+import random
+import time
 '''Defines an achievement class, and several achievements'''
 
 
@@ -27,7 +29,8 @@ class achievement():
 
     def __str__(self):
         '''Defines string representation of object'''
-        return '{' + "{}.{}: {}".format(self.__class__.__name__, self.id, self.__dict__) + '}'
+        return '{' + "{}.{}: {}".format(self.__class__.__name__, self.id, self.
+                                        __dict__) + '}'
 
     @classmethod
     def grant_achievement(cls, id):
@@ -36,7 +39,7 @@ class achievement():
             for a in cls.__all_achievements:
                 if a.id == id:
                     a.complete = True
-                    #display_achievement
+                    # display_achievement
                     return 1
         return 0
 
@@ -48,14 +51,18 @@ class achievement():
             for a in cls.__all_achievements:
                 if a.id == 0:
                     a.complete = True
-                    #display_achievement
+                    # display_achievement
                     return 1
         return 0
 
 
 def create_achievements():
     '''Creates all achievements with static IDs'''
-    rdm = achievement(name="lucky", id=0, hint="You've gotta be pretty lucky to get this")
-    stonks = achievement(name="stonks", id=1, hint="Have an absurd amount of strength")
-    ll = achievement(name="Little Light", id=2, hint="Increase your glow")
-    shine = achievement(name="Shine Bright", id=3, hint="Have a lot of glow")
+    rdm = achievement(name="lucky", id=0,
+                      hint="You've gotta be pretty lucky to get this")
+    stonks = achievement(name="stonks", id=1,
+                         hint="Have an absurd amount of strength")
+    ll = achievement(name="Little Light", id=2,
+                     hint="Increase your glow")
+    shine = achievement(name="Shine Bright", id=3,
+                        hint="Have a lot of glow")

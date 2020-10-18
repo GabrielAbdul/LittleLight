@@ -8,7 +8,8 @@ class Enemy(pygame.sprite.Sprite):
     '''Base enemy class to be inherited from for various enemies'''
     def __init__(self, x, y, img):
         '''Instantiates base instance variables'''
-        #x and y are starting pos, img is default image. Extra images should be loaded in inherited class
+        # x and y are starting pos, img is default image. Extra images should
+        # be loaded in inherited class
         super().__init__()
         self.images = []
         self.image = pygame.image.load('images/sprites/' + img).convert_alpha()
@@ -34,7 +35,10 @@ class Enemy(pygame.sprite.Sprite):
             self.counter += 1
 
     def die(self, enemy_list):
-        '''determines whether enemy dies, and reoves them from the screen if they do'''
+        '''
+        determines whether enemy dies, and removes them from the screen if
+        they do
+        '''
         self.health -= 1
         if self.health <= 0:
             enemy_list.remove(self)

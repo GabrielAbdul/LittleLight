@@ -2,7 +2,6 @@
 '''module that defines save class'''
 
 
-
 class Map():
     '''class to define a map'''
 
