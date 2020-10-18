@@ -29,7 +29,9 @@ def main():
     newGame = button([width / 3, height / 2 + 50, width / 3, 40], gameDisplay, (0, 0, 0))
     cont = button([width / 3, height / 2 + 100, width / 3, 40], gameDisplay, (0, 0, 0))
     ext = button([width / 3, (height / 2) + 150, width / 3, 40], gameDisplay, (0, 0, 0))
-    save_01 = button([width / 3, height / 2 - 100, width / 3, 40], gameDisplay)
+    save_01 = button([width / 3, height / 2 - 175, width / 3, 40], gameDisplay)
+    save_02 = button([width / 3, height / 2 - 115, width / 3, 40], gameDisplay)
+    save_03 = button([width / 3, height / 2 - 55, width / 3, 40], gameDisplay)
 
     print("w/h: {}/{}".format(width, height))
 
@@ -51,6 +53,10 @@ def main():
         elif name == 'continue':
             save_01.draw()
             save_01.addText('Save 1', -20)
+            save_02.draw()
+            save_02.addText('Save 2', -20)
+            save_03.draw()
+            save_03.addText('Save 3', -20)
         return 0
 
     def charCreate(save, player):
@@ -167,7 +173,8 @@ def main():
                         charCreate(save, player)
                         player.health = player.strength * 5 + player.glow * 2
                         player.curr_health = player.health
-                        save.objects.append(player.getStats())
+                        save.objects.get('save_1').update(player.getStats())
+                        print("save:", save.save_id)
                         save.save()
                         done = startGame(gameDisplay, player, clock)
                         print(player.getStats())
@@ -181,7 +188,32 @@ def main():
                         from models import storage
                         player = Player()
                         save = storage.load_save()
-                        player.updateStats(json.dumps(save[0]))
+                        print('save', save)
+                        player.updateStats(json.dumps(save.get('save_1')))
+                        print(player.getStats())
+                        done = startGame(gameDisplay, player, clock, save)
+                        if done:
+                            pygame.quit()
+                            quit()
+                if save_02.rect.collidepoint(pos):
+                        from models.player import Player
+                        from models.startGame import startGame
+                        from models import storage
+                        player = Player()
+                        save = storage.load_save()
+                        player.updateStats(json.dumps(save[1]))
+                        print(player.getStats())
+                        done = startGame(gameDisplay, player, clock, save)
+                        if done:
+                            pygame.quit()
+                            quit()
+                if save_03.rect.collidepoint(pos):
+                        from models.player import Player
+                        from models.startGame import startGame
+                        from models import storage
+                        player = Player()
+                        save = storage.load_save()
+                        player.updateStats(json.dumps(save[2]))
                         print(player.getStats())
                         done = startGame(gameDisplay, player, clock, save)
                         if done:
