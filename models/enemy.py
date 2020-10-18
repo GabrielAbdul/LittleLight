@@ -19,6 +19,7 @@ class Enemy(pygame.sprite.Sprite):
         self.spd = 1
         self.dist = random.randint(60, 80)
         self.walk = True
+        self.health = 3
 
     def move(self):
         '''auto-moves the enemy'''
@@ -30,3 +31,9 @@ class Enemy(pygame.sprite.Sprite):
             else:
                 self.counter = 0
             self.counter += 1
+
+    def die(self, enemy_list):
+        '''determines whether enemy dies, and reoves them from the screen if they do'''
+        self.health -= 1
+        if self.health <= 0:
+            enemy_list.remove(self)

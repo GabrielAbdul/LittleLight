@@ -30,14 +30,14 @@ def startGame(gameDisplay, player, clock, save=None):
             player.control(0, 0) # Wipe movement if no keys are held down
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             player.jump()
+        if keys[pygame.K_r]:
+            enemy_list = level.create(0, [[200, 576], [400, 576]])
         enemy_list.draw(gameDisplay)
         for enemy in enemy_list:
             enemy.move()
-            pygame.draw.rect(gameDisplay, (0,255,0), enemy.rect, 2)
         player.gravity() # Make sure gravity affects the player
         player.update(enemy_list) # Update player position
         player_list.draw(gameDisplay) # Redraw player
-        pygame.draw.rect(gameDisplay, (0,255,0), player.rect, 2)
         pygame.display.flip() # Redraw screen with all objects in new position
         clock.tick(60) # 60 fps speed
     return done

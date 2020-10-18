@@ -83,7 +83,7 @@ class Player(pygame.sprite.Sprite):
             if self.frame > 3 * self.__ani: # pausing on each frame for 3 ticks due to gamespeed
                 self.frame = 1
             self.image = pygame.transform.flip(self.images[self.frame // 3], True, False) # '//' to ensure int and not float, transform flips right sprite to left
-        if self.i_frame > 0:
+        if self.i_frame > 0 and not self.jumping:
             self.image = pygame.image.load('images/sprites/Sprite1hitright.png').convert_alpha()
             if self.i_frame > 10 and self.i_frame < 30:
                 self.image.set_alpha(0)
@@ -115,18 +115,20 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.movey
         hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
         for enemy in hit_list:
+            if self.falling:
+                if (enemy.rect.right >= self.rect.left + 40 and enemy.rect.left <= self.rect.right - 40) and self.rect.bottom >= enemy.rect.bottom + (enemy.rect.top - enemy.rect.bottom) // 2:
+                    self.falling = False
+                    self.jump()
+                    enemy.die(enemy_list)
+                    self.i_frame = 10
+                    continue
             if self.i_frame == 0 and (not self.falling and not self.hang):
-                if enemy.rect.right >= self.rect.left + 40 and enemy.rect.left <= self.rect.right - 40:
+                if enemy.rect.right >= self.rect.left + 40 and enemy.rect.left <= self.rect.right - 40 and self.rect.bottom >= enemy.rect.top + 10:
                     print("e_right: {}, e_left: {}, p_right: {}, p_left: {}".format(enemy.rect.right, enemy.rect.left, self.rect.right, self.rect.left))
                     self.curr_health -= 1
                     self.i_frame = 60
                     print(self.curr_health)
                     break
-            elif self.falling:
-                if (enemy.rect.right >= self.rect.left + 40 and enemy.rect.left <= self.rect.right - 40) and self.rect.bottom >= enemy.rect.bottom + (enemy.rect.top - enemy.rect.bottom) // 2:
-                    self.falling = False
-                    self.jump()
-                    enemy_list.remove(enemy)
         if self.i_frame > 0:
             self.i_frame -= 1
 
