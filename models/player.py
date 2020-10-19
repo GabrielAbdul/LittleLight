@@ -42,6 +42,9 @@ class Player(pygame.sprite.Sprite):
         self.hang = False  # Is the player hangin in the air
         self.i_frame = 0
         self.lives = 3
+        self.total_kills = 0
+        self.kills = 0
+        self.level = 0
 
     def getStats(self):
         '''returns a dictionary of player stats'''
@@ -50,7 +53,11 @@ class Player(pygame.sprite.Sprite):
                'curr_health': tmp.get('curr_health'),
                'agility': tmp.get('agility'),
                'strength': tmp.get('strength'),
-               'glow': tmp.get('glow')}
+               'glow': tmp.get('glow'),
+               'kills': tmp.get('kills'),
+               'lives': tmp.get('lives'),
+               'level': tmp.get('level')
+               }
         return res
 
     def updateStats(self, dict):
@@ -93,10 +100,6 @@ class Player(pygame.sprite.Sprite):
         if self.i_frame > 0 and not self.jumping:
             self.image = pygame.image.load(
                 'images/sprites/Sprite1hitright.png').convert_alpha()
-            if self.i_frame > 10 and self.i_frame < 30:
-                self.image.set_alpha(0)
-            else:
-                self.image.set_alpha(255)
         if self.jumping and self.falling is False:  # If the user is jumping.
             self.jump_count += 1
             if self.jump_count >= 15:  # Timer for upward movement
@@ -133,6 +136,8 @@ class Player(pygame.sprite.Sprite):
                     self.jump()
                     enemy.die(enemy_list)
                     self.i_frame = 10
+                    if enemy not in enemy_list:
+                        self.kills += 1
                     continue
             if self.i_frame == 0 and (not self.falling and not self.hang):
                 if enemy.rect.right >= self.rect.left + 40 and\

@@ -1,6 +1,6 @@
 import pygame
 import random
-from models.enemy import Enemy
+from models import enemy
 
 
 def startGame(gameDisplay, player, clock, save=None):
@@ -12,7 +12,7 @@ def startGame(gameDisplay, player, clock, save=None):
     player_list.add(player)
     steps = 2  # pixels to move per step
     level = Level()
-    enemy_list = level.create(0, [[200, 576], [400, 576]])
+    enemy_list = level.create(player.level)
     while not done:
         gameDisplay.fill((0, 0, 0))
         for event in pygame.event.get():
@@ -33,7 +33,8 @@ def startGame(gameDisplay, player, clock, save=None):
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             player.jump()
         if keys[pygame.K_r]:
-            enemy_list = level.create(0, [[200, 576], [400, 576]])
+            enemy_list = level.create(player.level)
+            player.kills = 0
         enemy_list.draw(gameDisplay)
         for enemy in enemy_list:
             enemy.move()
@@ -44,20 +45,22 @@ def startGame(gameDisplay, player, clock, save=None):
         elif reset is True:
             player.rect.x = 0
             player.rect.y = 500
-            enemy_list = level.create(0, [[200, 576], [400, 576]])
+            enemy_list = level.create(player.level)
         player_list.draw(gameDisplay)  # Redraw player
         pygame.display.flip()  # Redraw screen with all objects in new position
         clock.tick(60)  # 60 fps speed
+    print(player.kills)
     return done
 
 
 class Level():
     '''Constructs a level around the player'''
-    def create(self, level, loc):
+    def create(self, level):
         '''Creates the level'''
         enemy_list = pygame.sprite.Group()
         if level == 0:  # tutorial
+            loc =  [[200, 576], [400, 576]]
             for location in loc:
-                enemy = Enemy(location[0], location[1], 'Sprite1hitright.png')
-                enemy_list.add(enemy)
+                e = enemy.Rat(location[0], location[1])
+                enemy_list.add(e)
         return enemy_list

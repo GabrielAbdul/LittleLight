@@ -7,6 +7,7 @@ class Save():
     '''class to define a save'''
 
     objects = {
+            'auto': {},
             'save_1': {},
             'save_2': {},
             'save_3': {},
@@ -16,10 +17,10 @@ class Save():
         '''method to be called upon object instantiation'''
         self.__achievements = []
 
-    def save(self):
+    def save(self, save_name):
         '''method that will save a game'''
         try:
-            storage.save(self.objects)
+            storage.save(self.objects, save_name)
         except Exception as e:
             print("Couldn't save:", e)
 
