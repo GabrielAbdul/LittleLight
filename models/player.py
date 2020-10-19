@@ -46,6 +46,8 @@ class Player(pygame.sprite.Sprite):
         self.total_kills = 0
         self.kills = 0
         self.level = 0
+        self.climbing = False
+        self.slowfall = False
 
     def getStats(self):
         '''returns a dictionary of player stats'''
@@ -78,7 +80,7 @@ class Player(pygame.sprite.Sprite):
         self.movex = x
         self.movey = y
 
-    def update(self, enemy_list, plat_list):
+    def update(self, enemy_list, plat_list, rope_list):
         '''Update sprite position'''
         if self.movex > 0:  # moving right
             self.frame += 1
@@ -129,8 +131,10 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
         self.rect.x += self.movex
         self.rect.y += self.movey
+        self.climbing = False
         hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
         land_list = pygame.sprite.spritecollide(self, plat_list, False)
+        r_list = pygame.sprite.spritecollide(self, rope_list, False)
         for enemy in hit_list:
             if self.falling:
                 if (enemy.rect.right >= self.rect.left + 40 and
@@ -164,6 +168,17 @@ class Player(pygame.sprite.Sprite):
                 if self.rect.bottom <= p.rect.bottom:
                     self.rect.bottom = p.rect.top
                     self.jumping = False
+        for r in r_list:
+            if r.rect.top + 4 <= self.rect.top and r.rect.bottom >= self.rect.top:
+                tmp_x = (self.rect.left + (self.image.get_size()[0] // 2))
+                if r.rect.left - 5 <= tmp_x and r.rect.right + 5 >= tmp_x:
+                    self.climbing = True
+            elif r.rect.top + 8 <= self.rect.top:
+                self.rect.top = r.rect.top + 8
+                self.movey = 0
+        if len(r_list) is 0:
+            self.climbing = False
+            self.slowfall = False
         if self.i_frame > 0:
             self.i_frame -= 1
         if self.curr_health <= 0:
@@ -171,19 +186,24 @@ class Player(pygame.sprite.Sprite):
             self.curr_health = self.health
             return True
 
+
     def gravity(self):
         if self.falling:
             self.movey += 5  # Fall faster than jump, looks better imo
+            if self.slowfall:
+                self.movey -= 2
         if self.jumping:
             self.movey -= 4
+        if self.climbing:
+            self.movey -= 7
 
     def jump(self, ovr=0):
-        if self.falling is False and\
+        if ovr == 2:
+            self.climbing = True
+        elif self.falling is False and\
         self.jumping is False and\
         self.hang is False and\
         (self.jump_cd == 0 or ovr == 1):  # Don't want user infini-jumping from midair.
             self.jumping = True
             self.falling = False
             self.rect.y -= 10
-        else:
-            print(self.jump_cd)
