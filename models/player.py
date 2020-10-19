@@ -156,7 +156,7 @@ class Player(pygame.sprite.Sprite):
         for p in land_list:
             tmp_x = (self.rect.left + abs(self.rect.right - self.rect.left) - 32)
             if p.rect.left <= tmp_x and p.rect.right >= tmp_x:
-                if self.rect.top + 40 <= p.rect.top:
+                if self.rect.top + 50 <= p.rect.top:
                     self.falling = False
                     self.hang = False
                     self.movey = 0

@@ -5,7 +5,7 @@ from models import enemy
 
 def startGame(gameDisplay, player, clock, save=None):
     '''runs the main game'''
-    from models.platform import Platform
+    from models.button import button
     done = False
     player.rect.x = 0
     player.rect.y = 500  # User spawns falling
@@ -14,6 +14,7 @@ def startGame(gameDisplay, player, clock, save=None):
     steps = 2  # pixels to move per step
     level = Level()
     enemy_list, plat_list = level.create(player.level)
+    jmp = button([890, 600, 60, 25], gameDisplay, (0, 0, 0), (100, 200, 50))
     while not done:
         gameDisplay.fill((0, 0, 0))
         for event in pygame.event.get():
@@ -49,6 +50,11 @@ def startGame(gameDisplay, player, clock, save=None):
             player.rect.y = 500
             enemy_list, plat_list = level.create(player.level)
         player_list.draw(gameDisplay)  # Redraw player
+        if player.jump_cd > 0 or player.jumping:
+            jmp.draw((255, 0, 0))
+        else:
+            jmp.draw()
+        jmp.addText('Jump', 15)
         pygame.display.flip()  # Redraw screen with all objects in new position
         clock.tick(60)  # 60 fps speed
     print(player.kills)
