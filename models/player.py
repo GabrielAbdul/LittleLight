@@ -154,8 +154,8 @@ class Player(pygame.sprite.Sprite):
                                                  self.health))
                     break
         for p in land_list:
-            tmp_x = (self.rect.left + abs(self.rect.right - self.rect.left) - 32)
-            if p.rect.left <= tmp_x and p.rect.right >= tmp_x:
+            tmp_x = (self.rect.left + (self.image.get_size()[0] // 2))
+            if p.rect.left - 5 <= tmp_x and p.rect.right + 5 >= tmp_x:
                 if self.rect.top + 50 <= p.rect.top:
                     self.falling = False
                     self.hang = False
