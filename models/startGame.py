@@ -11,6 +11,7 @@ def startGame(gameDisplay, player, clock, save=None):
     player.rect.y = 500  # User spawns falling
     player_list = pygame.sprite.Group()
     player_list.add(player)
+    baseSteps = 2
     steps = 2  # pixels to move per step
     level = Level()
     enemy_list, plat_list, rope_list = level.create(player.level)
@@ -34,6 +35,7 @@ def startGame(gameDisplay, player, clock, save=None):
             player.control(0, 0)  # Wipe movement if no keys are held down
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             player.jump()
+            steps = baseSteps + 2
         else:
             player.climbing = False
         if keys[pygame.K_r]:
@@ -42,6 +44,9 @@ def startGame(gameDisplay, player, clock, save=None):
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             if not player.jumping:
                 player.control(0, 4)
+                player.rect.y += 1
+        if not player.jumping:
+            steps = baseSteps
         enemy_list.draw(gameDisplay)
         plat_list.draw(gameDisplay)
         rope_list.draw(gameDisplay)
@@ -49,6 +54,7 @@ def startGame(gameDisplay, player, clock, save=None):
             enemy.move()
         player.gravity()  # Make sure gravity affects the player
         reset = player.update(enemy_list, plat_list, rope_list)  # Update player position
+        print(player.climbing, player.movey)
         if player.lives == 0:
             return False
         elif reset is True:

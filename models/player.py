@@ -150,11 +150,11 @@ class Player(pygame.sprite.Sprite):
         if self.falling:
             self.movey += 5  # Fall faster than jump, looks better imo
             if self.slowfall:
-                self.movey -= 2
+                self.movey -= 3
         if self.jumping:
             self.movey -= 4
         if self.climbing:
-            self.movey -= 6
+            self.movey -= 5
 
     def jump(self, ovr=0):
         if ovr == 2:
