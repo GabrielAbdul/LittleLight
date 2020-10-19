@@ -107,7 +107,7 @@ class Player(pygame.sprite.Sprite):
                 self.jumping = False
                 self.jump_count = 0
                 self.hang = True
-                self.hang_count = 6
+                self.hang_count = 1
                 self.jump_cd = 50 - (5 * self.agility)
         elif self.hang is True and self.hang_count <= 6:
             # Hang time after jumping before falling
