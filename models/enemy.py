@@ -23,6 +23,7 @@ class Enemy(pygame.sprite.Sprite):
         self.walk = True
         self.health = 3
         self.damage = 2
+        self.type = 'enemy'
 
     def move(self):
         '''auto-moves the enemy'''
