@@ -6,7 +6,6 @@ from models import storage
 class Save():
     '''class to define a save'''
 
-    __saves = 1
     objects = {
             'save_1': {},
             'save_2': {},
@@ -15,8 +14,6 @@ class Save():
 
     def __init__(self):
         '''method to be called upon object instantiation'''
-        self.save_id = self.__saves
-        Save.__saves = self.save_id + 1
         self.__achievements = []
 
     def save(self):
