@@ -21,9 +21,13 @@ class button(pygame.Rect):
         self.color = color
         self.rectColor = rectColor
 
-    def draw(self):
+    def draw(self, color=None):
         '''draws the rectangle'''
-        pygame.draw.rect(self.gameDisplay, self.rectColor, self.rect, 0)
+        if color is None:
+            tmp = self.rectColor
+        else:
+            tmp = color
+        pygame.draw.rect(self.gameDisplay, tmp, self.rect, 0)
 
     def addText(self, text, offset=0):
         '''adds text to the button'''

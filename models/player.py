@@ -39,9 +39,15 @@ class Player(pygame.sprite.Sprite):
         self.prevx2 = 0  # logging idle direction
         self.falling = True  # Is the player falling
         self.jumping = False  # Is the player jumping
+        self.jump_cd = 0
         self.hang = False  # Is the player hangin in the air
         self.i_frame = 0
         self.lives = 3
+        self.total_kills = 0
+        self.kills = 0
+        self.level = 0
+        self.climbing = False
+        self.slowfall = False
 
     def getStats(self):
         '''returns a dictionary of player stats'''
@@ -50,7 +56,11 @@ class Player(pygame.sprite.Sprite):
                'curr_health': tmp.get('curr_health'),
                'agility': tmp.get('agility'),
                'strength': tmp.get('strength'),
-               'glow': tmp.get('glow')}
+               'glow': tmp.get('glow'),
+               'kills': tmp.get('kills'),
+               'lives': tmp.get('lives'),
+               'level': tmp.get('level')
+               }
         return res
 
     def updateStats(self, dict):
@@ -70,7 +80,7 @@ class Player(pygame.sprite.Sprite):
         self.movex = x
         self.movey = y
 
-    def update(self, enemy_list):
+    def update(self, enemy_list, plat_list, rope_list):
         '''Update sprite position'''
         if self.movex > 0:  # moving right
             self.frame += 1
@@ -93,10 +103,6 @@ class Player(pygame.sprite.Sprite):
         if self.i_frame > 0 and not self.jumping:
             self.image = pygame.image.load(
                 'images/sprites/Sprite1hitright.png').convert_alpha()
-            if self.i_frame > 10 and self.i_frame < 30:
-                self.image.set_alpha(0)
-            else:
-                self.image.set_alpha(255)
         if self.jumping and self.falling is False:  # If the user is jumping.
             self.jump_count += 1
             if self.jump_count >= 15:  # Timer for upward movement
@@ -104,6 +110,7 @@ class Player(pygame.sprite.Sprite):
                 self.jump_count = 0
                 self.hang = True
                 self.hang_count = 1
+                self.jump_cd = 50 - (5 * self.agility)
         elif self.hang is True and self.hang_count <= 6:
             # Hang time after jumping before falling
             self.hang_count += 1
@@ -111,6 +118,8 @@ class Player(pygame.sprite.Sprite):
             self.falling = True
             self.hang = False
             self.hang_count = 0
+        if self.jump_cd > 0:
+            self.jump_cd -= 1
         if self.rect.bottom >= 640:  # Temporary magic number, pending map
             self.rect.bottom = 640
             self.movey = 0
@@ -122,7 +131,10 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
         self.rect.x += self.movex
         self.rect.y += self.movey
+        self.climbing = False
         hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
+        land_list = pygame.sprite.spritecollide(self, plat_list, False)
+        r_list = pygame.sprite.spritecollide(self, rope_list, False)
         for enemy in hit_list:
             if self.falling:
                 if (enemy.rect.right >= self.rect.left + 40 and
@@ -130,9 +142,11 @@ class Player(pygame.sprite.Sprite):
                 self.rect.bottom >= enemy.rect.bottom +\
                 (enemy.rect.top - enemy.rect.bottom) // 2:
                     self.falling = False
-                    self.jump()
+                    self.jump(1)
                     enemy.die(enemy_list)
                     self.i_frame = 10
+                    if enemy not in enemy_list:
+                        self.kills += 1
                     continue
             if self.i_frame == 0 and (not self.falling and not self.hang):
                 if enemy.rect.right >= self.rect.left + 40 and\
@@ -143,6 +157,28 @@ class Player(pygame.sprite.Sprite):
                     print("Health: {}/{}".format(self.curr_health,
                                                  self.health))
                     break
+        for p in land_list:
+            tmp_x = (self.rect.left + (self.image.get_size()[0] // 2))
+            if p.rect.left - 5 <= tmp_x and p.rect.right + 5 >= tmp_x:
+                if self.rect.top + 50 <= p.rect.top:
+                    self.falling = False
+                    self.hang = False
+                    self.movey = 0
+                    self.jump_count = 0
+                if self.rect.bottom <= p.rect.bottom:
+                    self.rect.bottom = p.rect.top
+                    self.jumping = False
+        for r in r_list:
+            if r.rect.top + 4 <= self.rect.top and r.rect.bottom >= self.rect.top:
+                tmp_x = (self.rect.left + (self.image.get_size()[0] // 2))
+                if r.rect.left - 5 <= tmp_x and r.rect.right + 5 >= tmp_x:
+                    self.climbing = True
+            elif r.rect.top + 8 <= self.rect.top:
+                self.rect.top = r.rect.top + 8
+                self.movey = 0
+        if len(r_list) is 0:
+            self.climbing = False
+            self.slowfall = False
         if self.i_frame > 0:
             self.i_frame -= 1
         if self.curr_health <= 0:
@@ -150,16 +186,24 @@ class Player(pygame.sprite.Sprite):
             self.curr_health = self.health
             return True
 
+
     def gravity(self):
         if self.falling:
             self.movey += 5  # Fall faster than jump, looks better imo
+            if self.slowfall:
+                self.movey -= 2
         if self.jumping:
             self.movey -= 4
+        if self.climbing:
+            self.movey -= 7
 
-    def jump(self):
-        if self.falling is False and\
+    def jump(self, ovr=0):
+        if ovr == 2:
+            self.climbing = True
+        elif self.falling is False and\
         self.jumping is False and\
-        self.hang is False:  # Don't want user infini-jumping from midair.
+        self.hang is False and\
+        (self.jump_cd == 0 or ovr == 1):  # Don't want user infini-jumping from midair.
             self.jumping = True
             self.falling = False
             self.rect.y -= 10

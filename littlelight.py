@@ -27,6 +27,7 @@ def main():
     menu = 'main'
 
     # buttons
+    auto_s = button([width / 3, height / 2 - 160, width / 3, 40], gameDisplay)
     save_01 = button([width / 3, height / 2 - 200, width / 3, 40], gameDisplay)
     save_02 = button([width / 3, height / 2 - 40, width / 3, 40], gameDisplay)
     save_03 = button([width / 3, height / 1 - 300, width / 3, 40], gameDisplay)
@@ -58,6 +59,8 @@ def main():
             ext.draw()
             ext.addText('Exit')
         elif name == 'continue':
+            auto_s.draw()
+            auto_s.addText('Autosave', -10)
             save_01.draw()
             save_01.addText('Save 1', -20)
             save_02.draw()
@@ -172,7 +175,6 @@ def main():
                         menu = 'continue'
 
                     elif newGame.rect.collidepoint(pos):
-                        print('debug')
                         from models.startGame import startGame
                         from models.save import Save
                         from models.player import Player
@@ -181,8 +183,8 @@ def main():
                         charCreate(save, player)
                         player.health = player.strength * 5 + player.glow * 2
                         player.curr_health = player.health
-                        save.objects.get('save_1').update(player.getStats())
-                        save.save()
+                        save.objects.get('auto').update(player.getStats())
+                        save.save('auto')
                         done = startGame(gameDisplay, player, clock)
                         print(player.getStats())
                         if done:
@@ -194,7 +196,11 @@ def main():
                     from models import storage
                     player = Player()
                     save = storage.load_save()
-                    if save_01.rect.collidepoint(pos):
+                    if auto_s.rect.collidepoint(pos):
+                        player.updateStats(json.dumps(save.get('auto')))
+                        print(player.getStats())
+                        done = startGame(gameDisplay, player, clock, save)
+                    elif save_01.rect.collidepoint(pos):
                         saveName = 'save_1'
                         player.updateStats(json.dumps(save.get(saveName)))
                         print(player.getStats())

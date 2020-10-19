@@ -11,9 +11,15 @@ class FileStorage():
     __file_path = 'save_game.json'
 
     @staticmethod
-    def save(save_game):
+    def save(save_game, save_name):
         '''FileStorage module to create a saved game'''
 #        save_game.__achievements.append(achievement.check_achievements())
+        js = object
+        with open('save_game.json', 'r') as file:
+            js = json.load(file)
+        print(js)
+        js.update({save_name: save_game.get(save_name)})
+        print(js)
         with open('save_game.json', 'w') as file:
             json.dump(save_game, file)
 
