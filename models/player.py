@@ -24,7 +24,14 @@ class Player(pygame.sprite.Sprite):
             img = pygame.image.load('images/sprites/Sprite1stepright' +
                                     str(i) + '.png').convert_alpha()
             self.images.append(img)
+        self.images.append(pygame.image.load('images/sprites/Sprite1lightright.png').\
+                           convert_alpha())
+        for i in range(2, 8):
+            img = pygame.image.load('images/sprites/Sprite1lightright' +
+                                    str(i) + '.png').convert_alpha()
+            self.images.append(img)
         self.__ani = 8
+        self.__ani2 = 15
         self.image = self.images[0]
         self.rect = self.image.get_rect()
         self.movex = 0  # x-axis movement: positive=right, negative=left
@@ -48,6 +55,8 @@ class Player(pygame.sprite.Sprite):
         self.level = 0
         self.climbing = False
         self.slowfall = False
+        self.litCandle = False
+        self.lighting = False
 
     def getStats(self):
         '''returns a dictionary of player stats'''
@@ -84,27 +93,37 @@ class Player(pygame.sprite.Sprite):
         '''Update sprite position'''
         if self.climbing:
             self.jumping = False
-        if self.movex > 0:  # moving right
-            self.frame += 1
-            if self.frame > 3 * self.__ani:  # pausing on each frame for 3 tick
-                self.frame = 1
-            self.image = self.images[self.frame // 3]  # '//' to ensure int res
-        if self.movex == 0:
-            self.frame = 0
-            if self.prevx2 >= 0:
-                self.image = self.images[0]  # If right use right idle frame
-            else:
-                self.image = pygame.transform.flip(self.images[0], True, False)
-        if self.movex < 0:  # moving left
-            self.frame += 1
-            if self.frame > 3 * self.__ani:  # pausing on each frame for 3 tick
-                self.frame = 1
-            self.image = pygame.transform.flip(self.images[self.frame // 3],
+        if not self.lighting:
+            if self.movex > 0:  # moving right
+                self.frame += 1
+                if self.frame > 3 * self.__ani:  # pausing on each frame for 3 tick
+                    self.frame = 1
+                self.image = self.images[self.frame // 3]  # '//' to ensure int res
+            if self.movex == 0:
+                self.frame = 0
+                if self.prevx2 >= 0:
+                    self.image = self.images[0]  # If right use right idle frame
+                else:
+                    self.image = pygame.transform.flip(self.images[0], True, False)
+            if self.movex < 0:  # moving left
+                self.frame += 1
+                if self.frame > 3 * self.__ani:  # pausing on each frame for 3 tick
+                    self.frame = 1
+                self.image = pygame.transform.flip(self.images[self.frame // 3],
                                                True, False)
-            # '//' to ensure int and not float, transform flips right sprite
-        if self.i_frame > 0 and not self.jumping:
-            self.image = pygame.image.load(
-                'images/sprites/Sprite1hitright.png').convert_alpha()
+                # '//' to ensure int and not float, transform flips right sprite
+            if self.i_frame > 0 and not self.jumping:
+                self.image = pygame.image.load(
+                    'images/sprites/Sprite1hitright.png').convert_alpha()
+        else:
+            if self.frame // 3 <= self.__ani:
+                self.frame = (self.__ani + 1) * 3
+            self.image = self.images[self.frame // 3]
+            self.frame += 1
+            if self.frame == self.__ani2 * 3:
+                self.lighting = False
+                self.litCandle = True
+                self.frame = 0
         if self.jumping and self.falling is False:  # If the user is jumping.
             self.jump_count += 1
             if self.jump_count >= 15:  # Timer for upward movement
