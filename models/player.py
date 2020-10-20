@@ -82,6 +82,8 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, enemy_list, plat_list, rope_list):
         '''Update sprite position'''
+        if self.climbing:
+            self.jumping = False
         if self.movex > 0:  # moving right
             self.frame += 1
             if self.frame > 3 * self.__ani:  # pausing on each frame for 3 tick
@@ -135,6 +137,38 @@ class Player(pygame.sprite.Sprite):
         hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
         land_list = pygame.sprite.spritecollide(self, plat_list, False)
         r_list = pygame.sprite.spritecollide(self, rope_list, False)
+        self.collisionCheck(enemy_list, hit_list, land_list, r_list)
+        if self.i_frame > 0:
+            self.i_frame -= 1
+        if self.curr_health <= 0:
+            self.lives -= 1
+            self.curr_health = self.health
+            return True
+
+
+    def gravity(self):
+        if self.falling:
+            self.movey += 5  # Fall faster than jump, looks better imo
+            if self.slowfall:
+                self.movey -= 3
+        if self.jumping:
+            self.movey -= 4
+        if self.climbing:
+            self.movey -= 5
+
+    def jump(self, ovr=0):
+        if ovr == 2:
+            self.climbing = True
+        elif self.falling is False and\
+        self.jumping is False and\
+        self.hang is False and\
+        (self.jump_cd == 0 or ovr == 1):  # Don't want user infini-jumping from midair.
+            self.jumping = True
+            self.falling = False
+            self.rect.y -= 5
+
+    def collisionCheck(self, enemy_list, hit_list, land_list, r_list):
+        '''Checks for collision with player'''
         for enemy in hit_list:
             if self.falling:
                 if (enemy.rect.right >= self.rect.left + 40 and
@@ -169,41 +203,18 @@ class Player(pygame.sprite.Sprite):
                     self.rect.bottom = p.rect.top
                     self.jumping = False
         for r in r_list:
-            if r.rect.top + 4 <= self.rect.top and r.rect.bottom >= self.rect.top:
-                tmp_x = (self.rect.left + (self.image.get_size()[0] // 2))
+            tmp_x = (self.rect.left + (self.image.get_size()[0] // 2))
+            if r.rect.top + 6 < self.rect.top and r.rect.bottom >= self.rect.top:
                 if r.rect.left - 5 <= tmp_x and r.rect.right + 5 >= tmp_x:
                     self.climbing = True
-            elif r.rect.top + 8 <= self.rect.top:
-                self.rect.top = r.rect.top + 8
-                self.movey = 0
-        if len(r_list) is 0:
+            elif r.rect.top <= self.rect.top:
+                if r.rect.left - 5 <= tmp_x and r.rect.right + 5 >= tmp_x:
+                    self.rect.top = r.rect.top
+                    if self.movey < 0:
+                        self.movey = 0
+        if len(r_list) == 0:
             self.climbing = False
             self.slowfall = False
-        if self.i_frame > 0:
-            self.i_frame -= 1
-        if self.curr_health <= 0:
-            self.lives -= 1
-            self.curr_health = self.health
-            return True
-
-
-    def gravity(self):
-        if self.falling:
-            self.movey += 5  # Fall faster than jump, looks better imo
-            if self.slowfall:
-                self.movey -= 2
-        if self.jumping:
-            self.movey -= 4
-        if self.climbing:
-            self.movey -= 7
-
-    def jump(self, ovr=0):
-        if ovr == 2:
-            self.climbing = True
-        elif self.falling is False and\
-        self.jumping is False and\
-        self.hang is False and\
-        (self.jump_cd == 0 or ovr == 1):  # Don't want user infini-jumping from midair.
-            self.jumping = True
-            self.falling = False
-            self.rect.y -= 10
+        else:
+            if not self.climbing:
+                self.slowfall = True

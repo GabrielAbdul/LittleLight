@@ -11,6 +11,7 @@ def startGame(gameDisplay, player, clock, save=None):
     player.rect.y = 500  # User spawns falling
     player_list = pygame.sprite.Group()
     player_list.add(player)
+    baseSteps = 2
     steps = 2  # pixels to move per step
     level = Level()
     enemy_list, plat_list, rope_list = level.create(player.level)
@@ -34,21 +35,26 @@ def startGame(gameDisplay, player, clock, save=None):
             player.control(0, 0)  # Wipe movement if no keys are held down
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             player.jump()
+            steps = baseSteps + 2
         else:
             player.climbing = False
         if keys[pygame.K_r]:
             enemy_list, plat_list, rope_list = level.create(player.level)
             player.kills = 0
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            player.control(0, 4)
+            if not player.jumping:
+                player.control(0, 4)
+                player.rect.y += 1
+        if not player.jumping:
+            steps = baseSteps
         enemy_list.draw(gameDisplay)
         plat_list.draw(gameDisplay)
         rope_list.draw(gameDisplay)
         for enemy in enemy_list:
             enemy.move()
-        print("Climbing: {}, Slowfall: {}, movey: {}".format(player.climbing, player.slowfall, player.movey))
         player.gravity()  # Make sure gravity affects the player
         reset = player.update(enemy_list, plat_list, rope_list)  # Update player position
+        print(player.climbing, player.movey)
         if player.lives == 0:
             return False
         elif reset is True:
@@ -79,7 +85,7 @@ class Level():
             plt = [[200, 500, 128, 4, 'placeholder1.png'], [100, 600, 64, 4, 'placeholder1.png'],
                    [300, 550, 64, 4, 'placeholder1.png']]
             loc =  [[200, 576], [400, 576]]
-            rop = [[500, 300, 21, 337, 'basicRopeSprite.png']]
+            rop = [[150, 250, 21, 337, 'basicRopeSprite.png']]
             for location in loc:
                 e = enemy.Rat(location[0], location[1])
                 enemy_list.add(e)
