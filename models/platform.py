@@ -21,7 +21,7 @@ class Rope(pygame.sprite.Sprite):
         '''Initializes a rope'''
         super().__init__()
         self.image = pygame.image.load('images/sprites/' + img).convert_alpha()
-        # self.image = pygame.transform.scale(self.image, (width, height))
+        self.image = pygame.transform.scale(self.image, (width, height))
         self.rect = self.image.get_rect()
         self.rect.y = y
         self.rect.x = x

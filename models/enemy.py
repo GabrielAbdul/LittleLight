@@ -24,10 +24,13 @@ class Enemy(pygame.sprite.Sprite):
         self.health = 3
         self.damage = 2
         self.type = 'enemy'
+        self.i_frame = 0
 
-    def move(self):
+    def move(self, plat_list):
         '''auto-moves the enemy'''
+        self.i_frame -= 1
         if self.walk:
+            p_list = pygame.sprite.spritecollide(self, plat_list, False)
             if self.counter >= 0 and self.counter <= self.dist:
                 self.rect.x += self.spd
                 self.image = pygame.transform.flip(self.images[0], True, False)
@@ -37,28 +40,35 @@ class Enemy(pygame.sprite.Sprite):
             else:
                 self.counter = 0
             self.counter += 1
-            if self.rect.bottom < 640:
-                self.rect.y += 2
-            elif self.rect.bottom < 640:
-                self.rect.bottom = 640
+            for p in p_list:
+                if p.rect.left - 5 <= self.rect.right and p.rect.right + 5 >= self.rect.left:
+                    if self.rect.top + 50 <= p.rect.top:
+                        self.rect.bottom -= 2
+                    if self.rect.bottom <= p.rect.top + 5:
+                        self.rect.bottom = p.rect.top + 5
+            if p_list == []:
+                self.rect.bottom += 2
 
     def die(self, enemy_list):
         '''
         determines whether enemy dies, and removes them from the screen if
         they do
         '''
-        self.health -= 1
-        if self.health <= 0:
-            enemy_list.remove(self)
+        if self.i_frame <= 0:
+            self.i_frame = 90
+            self.health -= 1
+            print(self.health)
+            if self.health <= 0:
+                enemy_list.remove(self)
 
 class Rat(Enemy):
     '''defines a grunt enemy'''
     def __init__(self, x, y):
         '''Initializes a rat'''
-        super().__init__(x, y, 'enemies/rat1.png')
+        super().__init__(x, y, 'enemies/Rat1stand.png')
         self.health = 2
         l, h = self.image.get_size()
-        self.image = pygame.transform.scale(self.image, (int(l * 2), int(h * 2)))
+        # self.image = pygame.transform.scale(self.image, (int(l * 1.5), int(h * 1.5)))
         self.images[0] = self.image
         self.rect = self.image.get_rect()
         self.rect.x = x

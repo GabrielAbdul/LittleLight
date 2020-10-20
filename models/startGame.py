@@ -13,11 +13,12 @@ def startGame(gameDisplay, player, clock, save=None):
     player_list.add(player)
     baseSteps = 2
     steps = 2  # pixels to move per step
-    level = Level()
-    enemy_list, plat_list, rope_list = level.create(player.level)
+    level = Level(gameDisplay)
+    enemy_list, plat_list, rope_list, backdrop = level.create(player.level)
     jmp = button([890, 600, 60, 25], gameDisplay, (0, 0, 0), (100, 200, 50))
     while not done:
         gameDisplay.fill((0, 0, 0))
+        gameDisplay.blit(backdrop, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
@@ -39,7 +40,7 @@ def startGame(gameDisplay, player, clock, save=None):
         else:
             player.climbing = False
         if keys[pygame.K_r]:
-            enemy_list, plat_list, rope_list = level.create(player.level)
+            enemy_list, plat_list, rope_list, backdrop = level.create(player.level)
             player.kills = 0
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             if not player.jumping:
@@ -51,16 +52,15 @@ def startGame(gameDisplay, player, clock, save=None):
         plat_list.draw(gameDisplay)
         rope_list.draw(gameDisplay)
         for enemy in enemy_list:
-            enemy.move()
+            enemy.move(plat_list)
         player.gravity()  # Make sure gravity affects the player
         reset = player.update(enemy_list, plat_list, rope_list)  # Update player position
-        print(player.climbing, player.movey)
         if player.lives == 0:
             return False
         elif reset is True:
             player.rect.x = 0
             player.rect.y = 500
-            enemy_list, plat_list, rope_list = level.create(player.level)
+            enemy_list, plat_list, rope_list, backdrop = level.create(player.level)
         player_list.draw(gameDisplay)  # Redraw player
         if player.jump_cd > 0 or player.jumping:
             jmp.draw((255, 0, 0))
@@ -75,6 +75,9 @@ def startGame(gameDisplay, player, clock, save=None):
 
 class Level():
     '''Constructs a level around the player'''
+    def __init__(self, gameDisplay):
+        '''Initializes the level class'''
+        self.gameDisplay = gameDisplay
     def create(self, level):
         '''Creates the level'''
         from models import platform
@@ -82,10 +85,13 @@ class Level():
         plat_list = pygame.sprite.Group()
         rope_list = pygame.sprite.Group()
         if level == 0:  # tutorial
-            plt = [[200, 500, 128, 4, 'placeholder1.png'], [100, 600, 64, 4, 'placeholder1.png'],
-                   [300, 550, 64, 4, 'placeholder1.png']]
-            loc =  [[200, 576], [400, 576]]
-            rop = [[150, 250, 21, 337, 'basicRopeSprite.png']]
+            img = pygame.image.load('images/sprites/platforms/basicLongPlatformSprite.png')
+            print(img.get_size())
+            plt = [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 630, 960, 25, 'basicLongPlatformSprite(1).png'],
+                   [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [540, 310, 50, 25, 'basicBlockPlatformSprite (1).png'],
+                   [375, 460, 50, 25, 'basicBlockPlatformSprite (1).png']]
+            loc =  [[250, 576], [600, 576], [120, 300]]
+            rop = [[470, 25, 21, 500, 'basicRopeSprite.png']]
             for location in loc:
                 e = enemy.Rat(location[0], location[1])
                 enemy_list.add(e)
@@ -95,4 +101,5 @@ class Level():
             for rope in rop:
                 r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
                 rope_list.add(r)
-        return enemy_list, plat_list, rope_list
+            backdrop = pygame.image.load('images/maps/Guardtower.png')
+        return enemy_list, plat_list, rope_list, backdrop
