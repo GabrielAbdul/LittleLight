@@ -47,6 +47,8 @@ def startGame(gameDisplay, player, clock, save=None):
         if keys[pygame.K_l]:
             if candle.colliderect(player.rect):
                 player.lighting = True
+        if not candle.colliderect(player.rect):
+            player.lighting = False
         if not player.jumping:
             steps = baseSteps
         enemy_list.draw(gameDisplay)
@@ -109,6 +111,26 @@ class Level():
                 r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
                 rope_list.add(r)
             candle = pygame.Rect(773, 280, 50, 50)
+        elif player.level == 1:
+            player.rect.x = 0
+            player.rect.y = 500  # User spawns falling
+            plt = [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 620, 960, 25, 'basicLongPlatformSprite(1).png'],
+                   [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [840, 320, 25, 40, 'basicBlockPlatformSprite (1).png'],
+                   [205, 555, 40, 20, 'basicBlockPlatformSprite (1).png'], [290, 500, 50, 25, 'basicBlockPlatformSprite (1).png'],
+                   [240, 450, 20, 10, 'basicBlockPlatformSprite (1).png'], [90, 350, 25, 25, 'basicBlockPlatformSprite (1).png'],
+                   [25, 280, 40, 25, 'basicBlockPlatformSprite (1).png'], [90, 225, 25, 35, 'basicBlockPlatformSprite (1).png'],
+                   [320, 305, 25, 45, 'basicBlockPlatformSprite (1).png'], [430, 320, 105, 30, 'basicLongPlatformSprite(1).png']]
+            for plat in plt:
+                p = platform.Platform(plat[0], plat[1], plat[2], plat[3], plat[4])
+                plat_list.add(p)
+            rop = [[200, 0, 25, 250, 'basicRopeSprite.png'], [730, 0, 25, 350, 'basicRopeSprite.png']]
+            for rope in rop:
+                r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
+                rope_list.add(r)
+            loc =  [[250, 576], [630, 350]]
+            for location in loc:
+                e = enemy.Rat(location[0], location[1])
+                enemy_list.add(e)
         if player.level <= 5:
             backdrop = pygame.image.load('images/maps/Guardtower.png')
             candle = pygame.Rect(773, 280, 50, 50)
