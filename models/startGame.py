@@ -126,6 +126,7 @@ class Level():
                     [35, 340, 60, 25, 'basicBlockPlatformSprite (1).png'], [52, 130, 65, 25, 'basicBlockPlatformSprite (1).png']
                         ],
                 'rop': [[390, 0, 21, 280, 'basicRopeSprite.png'], [40, 0, 21, 280, 'basicRopeSprite.png']],
+                'candle': pygame.Rect(773, 280, 50, 50)
             }
         }
         level = {'rat': [], 'rop': [], 'plt': []}
