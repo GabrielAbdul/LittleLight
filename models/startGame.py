@@ -95,23 +95,37 @@ class Level():
         enemy_list = pygame.sprite.Group()
         plat_list = pygame.sprite.Group()
         rope_list = pygame.sprite.Group()
-        levels = {'0': {
-            'plt': [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 630, 960, 25, 'basicLongPlatformSprite(1).png'],
+        levels = {
+            '0': {
+                'plt': [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 630, 960, 25, 'basicLongPlatformSprite(1).png'],
                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [540, 310, 50, 25, 'basicBlockPlatformSprite (1).png'],
                    [375, 460, 50, 25, 'basicBlockPlatformSprite (1).png'], [840, 340, 50, 25, 'basicBlockPlatformSprite (1).png']],
-            'rat':  [[250, 576], [600, 576], [120, 300]],
-            'rop': [[470, 25, 21, 500, 'basicRopeSprite.png']],
-            'candle': pygame.Rect(773, 280, 50, 50)
+                'rat':  [[250, 576], [600, 576], [120, 300]],
+                'rop': [[470, 25, 21, 500, 'basicRopeSprite.png']],
+                'candle': pygame.Rect(773, 280, 50, 50)
             },
             '1': {
-            'plt': [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 620, 960, 25, 'basicLongPlatformSprite(1).png'],
+                'plt': [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 620, 960, 25, 'basicLongPlatformSprite(1).png'],
                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [840, 320, 25, 40, 'basicBlockPlatformSprite (1).png'],
                    [205, 555, 40, 20, 'basicBlockPlatformSprite (1).png'], [290, 500, 50, 25, 'basicBlockPlatformSprite (1).png'],
                    [240, 450, 20, 10, 'basicBlockPlatformSprite (1).png'], [90, 350, 25, 25, 'basicBlockPlatformSprite (1).png'],
                    [25, 280, 40, 25, 'basicBlockPlatformSprite (1).png'], [90, 225, 25, 35, 'basicBlockPlatformSprite (1).png'],
                    [320, 305, 25, 45, 'basicBlockPlatformSprite (1).png'], [430, 320, 105, 30, 'basicLongPlatformSprite(1).png']],
-            'rop': [[200, 0, 25, 250, 'basicRopeSprite.png'], [730, 0, 25, 350, 'basicRopeSprite.png']],
-            'rat': [[250, 576], [630, 350]],
+                'rop': [[200, 0, 25, 250, 'basicRopeSprite.png'], [730, 0, 25, 350, 'basicRopeSprite.png']],
+                'rat': [[250, 576], [630, 350]],
+                'candle': pygame.Rect(773, 280, 50, 50)
+            },
+            '2': {
+                'plt': [
+                    [115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 625, 960, 35, 'basicLongPlatformSprite(1).png'],
+                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'],
+                    [290, 500, 55, 25, 'basicBlockPlatformSprite (1).png'], [415, 555, 120, 20, 'basicLongPlatformSprite(1).png'],
+                    [375, 455, 50, 25, 'basicBlockPlatformSprite (1).png'], [375, 345, 50, 25, 'basicBlockPlatformSprite (1).png'],
+                    [280, 375, 50, 25, 'basicBlockPlatformSprite (1).png'], [730, 340, 50, 25, 'basicBlockPlatformSprite (1).png'], # Remove this line once crates ready
+                    [430, 100, 100, 25, 'basicLongPlatformSprite(1).png'], [475, 200, 160, 25, 'basicLongPlatformSprite(1).png'],
+                    [35, 340, 60, 25, 'basicBlockPlatformSprite (1).png'], [52, 130, 65, 25, 'basicBlockPlatformSprite (1).png']
+                        ],
+                'rop': [[390, 0, 21, 280, 'basicRopeSprite.png'], [40, 0, 21, 280, 'basicRopeSprite.png']],
             }
         }
         level = {'rat': [], 'rop': [], 'plt': []}
