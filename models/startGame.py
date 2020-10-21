@@ -7,8 +7,6 @@ def startGame(gameDisplay, player, clock, save=None):
     '''runs the main game'''
     from models.button import button
     done = False
-    player.rect.x = 0
-    player.rect.y = 500  # User spawns falling
     player_list = pygame.sprite.Group()
     player_list.add(player)
     baseSteps = 2
@@ -94,6 +92,8 @@ class Level():
         plat_list = pygame.sprite.Group()
         rope_list = pygame.sprite.Group()
         if player.level == 0:  # tutorial
+            player.rect.x = 0
+            player.rect.y = 500  # User spawns falling
             plt = [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 630, 960, 25, 'basicLongPlatformSprite(1).png'],
                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [540, 310, 50, 25, 'basicBlockPlatformSprite (1).png'],
                    [375, 460, 50, 25, 'basicBlockPlatformSprite (1).png'], [840, 340, 50, 25, 'basicBlockPlatformSprite (1).png']]
