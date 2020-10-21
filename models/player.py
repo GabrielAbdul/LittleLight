@@ -120,6 +120,8 @@ class Player(pygame.sprite.Sprite):
                 self.frame = (self.__ani + 1) * 3
             self.image = self.images[self.frame // 3]
             self.frame += 1
+            if self.prevx2 < 0:
+                self.image = pygame.transform.flip(self.image, True, False)
             if self.frame == self.__ani2 * 3:
                 self.lighting = False
                 self.litCandle = True

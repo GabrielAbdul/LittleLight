@@ -96,7 +96,7 @@ class Level():
         if player.level == 0:  # tutorial
             plt = [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 630, 960, 25, 'basicLongPlatformSprite(1).png'],
                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [540, 310, 50, 25, 'basicBlockPlatformSprite (1).png'],
-                   [375, 460, 50, 25, 'basicBlockPlatformSprite (1).png'], [773, 340, 50, 25, 'basicBlockPlatformSprite (1).png']]
+                   [375, 460, 50, 25, 'basicBlockPlatformSprite (1).png'], [840, 340, 50, 25, 'basicBlockPlatformSprite (1).png']]
             loc =  [[250, 576], [600, 576], [120, 300]]
             rop = [[470, 25, 21, 500, 'basicRopeSprite.png']]
             for location in loc:
