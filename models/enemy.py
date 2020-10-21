@@ -57,7 +57,6 @@ class Enemy(pygame.sprite.Sprite):
         if self.i_frame <= 0:
             self.i_frame = 90
             self.health -= 1
-            print(self.health)
             if self.health <= 0:
                 enemy_list.remove(self)
 
