@@ -1,11 +1,14 @@
 import pygame
 import random
 from models import enemy
+from models.achievements import *
 
 
 def startGame(gameDisplay, player, clock, save=None):
     '''runs the main game'''
     from models.button import button
+    achievements = create_achievements()
+    achieve = achievement()
     done = False
     player.rect.x = 0
     player.rect.y = 500  # User spawns falling
@@ -17,6 +20,23 @@ def startGame(gameDisplay, player, clock, save=None):
     enemy_list, plat_list, rope_list, backdrop = level.create(player.level)
     jmp = button([890, 600, 60, 25], gameDisplay, (0, 0, 0), (100, 200, 50))
     while not done:
+        # checking for player stats and granting achievements based on them
+        if player.strength >= 30:
+            granted = achieve.grant_achievement(player, achievements[1])
+            if granted == 1:
+                print("Achievement {} Unlocked!".format(achievements[1]))
+        if player.randomInt == 50:
+            granted = achieve.grant_achievement(player, achievements[0])
+            if granted == 1:
+                print("Achievement {} Unlocked!".format(achievements[0]))
+        if player.glow >= 10:
+            granted = achieve.grant_achievement(player, achievements[3])
+            if granted == 1:
+                print("Achievement {} Unlocked!".format(achievements[3]))
+        if player.glow < 2:
+            granted = achieve.grant_achievement(player, achievements[2])
+            if granted == 1:
+                print("Achievement {} Unlocked!".format(achievements[2]))
         gameDisplay.fill((0, 0, 0))
         gameDisplay.blit(backdrop, (0, 0))
         for event in pygame.event.get():
