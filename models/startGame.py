@@ -58,7 +58,7 @@ def startGame(gameDisplay, player, clock, save=None):
             enemy.move(plat_list)
         player.gravity()  # Make sure gravity affects the player
         reset = player.update(enemy_list, plat_list, rope_list)  # Update player position
-        if player.litCandle and player.rect.right >= 950:
+        if player.litCandle and player.rect.right >= 950 and player.rect.top >= 520:
             player.litCandle = False
             player.level += 1
             reset = True
