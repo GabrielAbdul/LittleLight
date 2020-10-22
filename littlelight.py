@@ -181,11 +181,11 @@ def main():
                         player = Player()
                         save = Save()
                         charCreate(save, player)
-                        player.health = player.strength * 5 + player.glow * 2
+                        player.health = player.strength * 2 + player.glow
                         player.curr_health = player.health
                         save.objects.get('auto').update(player.getStats())
                         save.save('auto')
-                        done = startGame(gameDisplay, player, clock)
+                        done = startGame(gameDisplay, player, clock, save)
                         print(player.getStats())
                         if done:
                             pygame.quit()
@@ -194,25 +194,28 @@ def main():
                     from models.player import Player
                     from models.startGame import startGame
                     from models import storage
+                    from models.save import Save
                     player = Player()
-                    save = storage.load_save()
+                    saves = storage.load_save()
+                    save = Save()
+                    save.objects = saves
                     if auto_s.rect.collidepoint(pos):
-                        player.updateStats(json.dumps(save.get('auto')))
+                        player.updateStats(json.dumps(saves.get('auto')))
                         print(player.getStats())
                         done = startGame(gameDisplay, player, clock, save)
                     elif save_01.rect.collidepoint(pos):
                         saveName = 'save_1'
-                        player.updateStats(json.dumps(save.get(saveName)))
+                        player.updateStats(json.dumps(saves.get(saveName)))
                         print(player.getStats())
                         done = startGame(gameDisplay, player, clock, save)
                     elif save_02.rect.collidepoint(pos):
                         saveName = 'save_2'
-                        player.updateStats(json.dumps(save.get(saveName)))
+                        player.updateStats(json.dumps(saves.get(saveName)))
                         print(player.getStats())
                         done = startGame(gameDisplay, player, clock, save)
                     elif save_03.rect.collidepoint(pos):
                         saveName = 'save_3'
-                        player.updateStats(json.dumps(save.get(saveName)))
+                        player.updateStats(json.dumps(saves.get(saveName)))
                         print(player.getStats())
                         done = startGame(gameDisplay, player, clock, save)
                     if done:

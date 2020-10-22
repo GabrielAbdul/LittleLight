@@ -18,6 +18,7 @@ class FileStorage():
         with open('save_game.json', 'r') as file:
             js = json.load(file)
         print(js)
+        js.pop(save_name)
         js.update({save_name: save_game.get(save_name)})
         print(js)
         with open('save_game.json', 'w') as file:
