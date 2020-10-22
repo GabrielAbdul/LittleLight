@@ -4,7 +4,7 @@ from models import enemy
 from models.achievements import *
 
 
-def startGame(gameDisplay, player, clock, save=None):
+def startGame(gameDisplay, player, clock, save):
     '''runs the main game'''
     from models.button import button
     achievements = create_achievements()
@@ -84,6 +84,8 @@ def startGame(gameDisplay, player, clock, save=None):
             reset = True
             player.total_kills += player.kills
             player.kills = 0
+            save.objects.get('auto').update(player.getStats())
+            save.save('auto')
         if player.lives == 0:
             return False
         elif reset is True:
@@ -113,45 +115,73 @@ class Level():
         enemy_list = pygame.sprite.Group()
         plat_list = pygame.sprite.Group()
         rope_list = pygame.sprite.Group()
-        if player.level == 0:  # tutorial
-            player.rect.x = 0
-            player.rect.y = 500  # User spawns falling
-            plt = [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 630, 960, 25, 'basicLongPlatformSprite(1).png'],
+        levels = {
+            '0': {
+                'plt': [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 630, 960, 25, 'basicLongPlatformSprite(1).png'],
                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [540, 310, 50, 25, 'basicBlockPlatformSprite (1).png'],
-                   [375, 460, 50, 25, 'basicBlockPlatformSprite (1).png'], [840, 340, 50, 25, 'basicBlockPlatformSprite (1).png']]
-            loc =  [[250, 576], [600, 576], [120, 300]]
-            rop = [[470, 25, 21, 500, 'basicRopeSprite.png']]
-            for location in loc:
-                e = enemy.Rat(location[0], location[1])
-                enemy_list.add(e)
-            for plat in plt:
-                p = platform.Platform(plat[0], plat[1], plat[2], plat[3], plat[4])
-                plat_list.add(p)
-            for rope in rop:
-                r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
-                rope_list.add(r)
-            candle = pygame.Rect(773, 280, 50, 50)
-        elif player.level == 1:
-            player.rect.x = 0
-            player.rect.y = 500  # User spawns falling
-            plt = [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 620, 960, 25, 'basicLongPlatformSprite(1).png'],
+                   [375, 460, 50, 25, 'basicBlockPlatformSprite (1).png'], [840, 340, 50, 25, 'basicBlockPlatformSprite (1).png']],
+                'rat':  [[250, 576], [600, 576], [120, 300]],
+                'rop': [[470, 25, 21, 500, 'basicRopeSprite.png']],
+                'candle': pygame.Rect(773, 280, 50, 50)
+            },
+            '1': {
+                'plt': [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 620, 960, 25, 'basicLongPlatformSprite(1).png'],
                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [840, 320, 25, 40, 'basicBlockPlatformSprite (1).png'],
                    [205, 555, 40, 20, 'basicBlockPlatformSprite (1).png'], [290, 500, 50, 25, 'basicBlockPlatformSprite (1).png'],
                    [240, 450, 20, 10, 'basicBlockPlatformSprite (1).png'], [90, 350, 25, 25, 'basicBlockPlatformSprite (1).png'],
                    [25, 280, 40, 25, 'basicBlockPlatformSprite (1).png'], [90, 225, 25, 35, 'basicBlockPlatformSprite (1).png'],
-                   [320, 305, 25, 45, 'basicBlockPlatformSprite (1).png'], [430, 320, 105, 30, 'basicLongPlatformSprite(1).png']]
-            for plat in plt:
+                   [320, 305, 25, 45, 'basicBlockPlatformSprite (1).png'], [430, 320, 105, 30, 'basicLongPlatformSprite(1).png']],
+                'rop': [[200, 0, 25, 250, 'basicRopeSprite.png'], [730, 0, 25, 350, 'basicRopeSprite.png']],
+                'rat': [[250, 576], [630, 350]],
+                'candle': pygame.Rect(773, 280, 50, 50)
+            },
+            '2': {
+                'plt': [
+                    [115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 625, 960, 35, 'basicLongPlatformSprite(1).png'],
+                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'],
+                    [290, 500, 55, 25, 'basicBlockPlatformSprite (1).png'], [415, 555, 120, 20, 'basicLongPlatformSprite(1).png'],
+                    [375, 455, 50, 25, 'basicBlockPlatformSprite (1).png'], [375, 345, 50, 25, 'basicBlockPlatformSprite (1).png'],
+                    [280, 375, 50, 25, 'basicBlockPlatformSprite (1).png'], [730, 340, 50, 25, 'basicBlockPlatformSprite (1).png'], # Remove this line once crates ready
+                    [430, 100, 100, 25, 'basicLongPlatformSprite(1).png'], [475, 200, 160, 25, 'basicLongPlatformSprite(1).png'],
+                    [35, 340, 60, 25, 'basicBlockPlatformSprite (1).png'], [52, 130, 65, 25, 'basicBlockPlatformSprite (1).png']
+                        ],
+                'rop': [[390, 0, 21, 280, 'basicRopeSprite.png'], [40, 0, 21, 280, 'basicRopeSprite.png']],
+                'candle': pygame.Rect(773, 280, 50, 50)
+            },
+            '3': {
+                'plt': [
+                    [115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 625, 960, 35, 'basicLongPlatformSprite(1).png'],
+                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'],
+                    [15, 140, 100, 25, 'basicBlockPlatformSprite (1).png']
+                ],
+                'rop': [[470, 50, 21, 500, 'basicRopeSprite.png'], [910, 50, 21, 440, 'basicRopeSprite.png']],
+                'rotate_rope': [0, 100, 25, 450, 'basicRopeSprite.png']
+            }
+        }
+        level = {'rat': [], 'rop': [], 'plt': []}
+        tmp = levels.get(str(player.level))
+        if tmp is not None:
+            level.update(tmp)
+        for rat in level.get('rat'):
+            e = enemy.Rat(rat[0], rat[1])
+            enemy_list.add(e)
+        for rope in level.get('rop'):
+            r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
+            rope_list.add(r)
+        for plat in level.get('plt'):
                 p = platform.Platform(plat[0], plat[1], plat[2], plat[3], plat[4])
                 plat_list.add(p)
-            rop = [[200, 0, 25, 250, 'basicRopeSprite.png'], [730, 0, 25, 350, 'basicRopeSprite.png']]
-            for rope in rop:
-                r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
-                rope_list.add(r)
-            loc =  [[250, 576], [630, 350]]
-            for location in loc:
-                e = enemy.Rat(location[0], location[1])
-                enemy_list.add(e)
+        if level.get('rotate_rope'):
+            rope = level.get('rotate_rope')
+            r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
+            r.image = pygame.transform.rotate(r.image, 270)
+            r.rect = r.image.get_rect()
+            r.rect.x = 40
+            r.rect.y = 50
+            rope_list.add(r)
         if player.level <= 5:
             backdrop = pygame.image.load('images/maps/Guardtower.png')
             candle = pygame.Rect(773, 280, 50, 50)
+            player.rect.x = 0
+            player.rect.y = 500
         return enemy_list, plat_list, rope_list, backdrop, candle
