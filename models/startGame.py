@@ -127,6 +127,15 @@ class Level():
                         ],
                 'rop': [[390, 0, 21, 280, 'basicRopeSprite.png'], [40, 0, 21, 280, 'basicRopeSprite.png']],
                 'candle': pygame.Rect(773, 280, 50, 50)
+            },
+            '3': {
+                'plt': [
+                    [115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 625, 960, 35, 'basicLongPlatformSprite(1).png'],
+                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'],
+                    [15, 140, 100, 25, 'basicBlockPlatformSprite (1).png']
+                ],
+                'rop': [[470, 50, 21, 500, 'basicRopeSprite.png'], [910, 50, 21, 440, 'basicRopeSprite.png']],
+                'rotate_rope': [0, 100, 25, 450, 'basicRopeSprite.png']
             }
         }
         level = {'rat': [], 'rop': [], 'plt': []}
@@ -142,6 +151,14 @@ class Level():
         for plat in level.get('plt'):
                 p = platform.Platform(plat[0], plat[1], plat[2], plat[3], plat[4])
                 plat_list.add(p)
+        if level.get('rotate_rope'):
+            rope = level.get('rotate_rope')
+            r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
+            r.image = pygame.transform.rotate(r.image, 270)
+            r.rect = r.image.get_rect()
+            r.rect.x = 40
+            r.rect.y = 50
+            rope_list.add(r)
         if player.level <= 5:
             backdrop = pygame.image.load('images/maps/Guardtower.png')
             candle = pygame.Rect(773, 280, 50, 50)
