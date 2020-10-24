@@ -12,7 +12,7 @@ def startGame(gameDisplay, player, clock, save):
     baseSteps = 2
     steps = 2  # pixels to move per step
     level = Level(gameDisplay)
-    enemy_list, plat_list, rope_list, backdrop, candle = level.create(player)
+    enemy_list, plat_list, rope_list, backdrop, candle, box_list = level.create(player)
     jmp = button([890, 600, 60, 25], gameDisplay, (0, 0, 0), (100, 200, 50))
     flame = []
     flame.append(pygame.image.load('images/sprites/Flame1.png'))
@@ -41,7 +41,7 @@ def startGame(gameDisplay, player, clock, save):
         else:
             player.climbing = False
         if keys[pygame.K_r]:
-            enemy_list, plat_list, rope_list, backdrop, candle = level.create(player)
+            enemy_list, plat_list, rope_list, backdrop, candle, box_list = level.create(player)
             player.kills = 0
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             if not player.jumping:
@@ -57,10 +57,13 @@ def startGame(gameDisplay, player, clock, save):
         enemy_list.draw(gameDisplay)
         plat_list.draw(gameDisplay)
         rope_list.draw(gameDisplay)
+        box_list.draw(gameDisplay)
         for enemy in enemy_list:
             enemy.move(plat_list)
+        for box in box_list:
+            box.move(plat_list)
         player.gravity()  # Make sure gravity affects the player
-        reset = player.update(enemy_list, plat_list, rope_list)  # Update player position
+        reset = player.update(enemy_list, plat_list, rope_list, box_list)  # Update player position
         if player.litCandle:
             loc = (candle.left + 7, candle.top - 5)
             gameDisplay.blit(flame[random.randint(0, 1)], (loc))
@@ -75,7 +78,7 @@ def startGame(gameDisplay, player, clock, save):
         if player.lives == 0:
             return False
         elif reset is True:
-            enemy_list, plat_list, rope_list, backdrop, candle = level.create(player)
+            enemy_list, plat_list, rope_list, backdrop, candle, box_list = level.create(player)
         player_list.draw(gameDisplay)  # Redraw player
         if player.jump_cd > 0 or player.jumping:
             jmp.draw((255, 0, 0))
@@ -99,6 +102,7 @@ class Level():
         enemy_list = pygame.sprite.Group()
         plat_list = pygame.sprite.Group()
         rope_list = pygame.sprite.Group()
+        box_list = pygame.sprite.Group()
         levels = {
             '0': {
                 'plt': [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 630, 960, 25, 'basicLongPlatformSprite(1).png'],
@@ -139,10 +143,11 @@ class Level():
                     [15, 140, 100, 25, 'basicBlockPlatformSprite (1).png']
                 ],
                 'rop': [[470, 50, 21, 500, 'basicRopeSprite.png'], [910, 50, 21, 440, 'basicRopeSprite.png']],
-                'rotate_rope': [0, 100, 25, 450, 'basicRopeSprite.png']
+                'rotate_rope': [0, 100, 25, 450, 'basicRopeSprite.png'],
+                'box': [[20, 80, 50, 50, 'woodenBoxSprite.png'], [650, 350, 50, 50, 'woodenBoxSprite.png']]
             }
         }
-        level = {'rat': [], 'rop': [], 'plt': []}
+        level = {'rat': [], 'rop': [], 'plt': [], 'box': []}
         tmp = levels.get(str(player.level))
         if tmp is not None:
             level.update(tmp)
@@ -153,8 +158,12 @@ class Level():
             r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
             rope_list.add(r)
         for plat in level.get('plt'):
-                p = platform.Platform(plat[0], plat[1], plat[2], plat[3], plat[4])
-                plat_list.add(p)
+            p = platform.Platform(plat[0], plat[1], plat[2], plat[3], plat[4])
+            plat_list.add(p)
+        for box in level.get('box'):
+            b = platform.Box(box[0], box[1], box[2], box[3], box[4])
+            box_list.add(b)
+            plat_list.add(b)
         if level.get('rotate_rope'):
             rope = level.get('rotate_rope')
             r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
@@ -168,4 +177,4 @@ class Level():
             candle = pygame.Rect(773, 280, 50, 50)
             player.rect.x = 0
             player.rect.y = 500
-        return enemy_list, plat_list, rope_list, backdrop, candle
+        return enemy_list, plat_list, rope_list, backdrop, candle, box_list

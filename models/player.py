@@ -89,7 +89,7 @@ class Player(pygame.sprite.Sprite):
         self.movex = x
         self.movey = y
 
-    def update(self, enemy_list, plat_list, rope_list):
+    def update(self, enemy_list, plat_list, rope_list, box_list):
         '''Update sprite position'''
         if self.climbing:
             self.jumping = False
@@ -158,7 +158,8 @@ class Player(pygame.sprite.Sprite):
         hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
         land_list = pygame.sprite.spritecollide(self, plat_list, False)
         r_list = pygame.sprite.spritecollide(self, rope_list, False)
-        self.collisionCheck(enemy_list, hit_list, land_list, r_list)
+        b_list = pygame.sprite.spritecollide(self, box_list, False)
+        self.collisionCheck(enemy_list, hit_list, land_list, r_list, b_list)
         if self.i_frame > 0:
             self.i_frame -= 1
         if self.curr_health <= 0:
@@ -188,8 +189,11 @@ class Player(pygame.sprite.Sprite):
             self.falling = False
             self.rect.y -= 5
 
-    def collisionCheck(self, enemy_list, hit_list, land_list, r_list):
+    def collisionCheck(self, enemy_list, hit_list, land_list, r_list, b_list):
         '''Checks for collision with player'''
+        for box in b_list:
+            if self.rect.bottom <= box.rect.bottom + 5 and self.rect.bottom >= box.rect.bottom - 5:  # pushing
+                box.movex = self.movex
         for enemy in hit_list:
             if (enemy.rect.right >= self.rect.left + 40 and
                 enemy.rect.left <= self.rect.right - 40) and\
