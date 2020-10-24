@@ -14,6 +14,9 @@ def startGame(gameDisplay, player, clock, save):
     level = Level(gameDisplay)
     enemy_list, plat_list, rope_list, backdrop, candle = level.create(player)
     jmp = button([890, 600, 60, 25], gameDisplay, (0, 0, 0), (100, 200, 50))
+    flame = []
+    flame.append(pygame.image.load('images/sprites/Flame1.png'))
+    flame.append(pygame.image.load('images/sprites/Flame2.png'))
     while not done:
         gameDisplay.fill((0, 0, 0))
         gameDisplay.blit(backdrop, (0, 0))
@@ -58,6 +61,9 @@ def startGame(gameDisplay, player, clock, save):
             enemy.move(plat_list)
         player.gravity()  # Make sure gravity affects the player
         reset = player.update(enemy_list, plat_list, rope_list)  # Update player position
+        if player.litCandle:
+            loc = (candle.left + 7, candle.top - 5)
+            gameDisplay.blit(flame[random.randint(0, 1)], (loc))
         if player.litCandle and player.rect.right >= 950 and player.rect.top >= 520:
             player.litCandle = False
             player.level += 1
@@ -69,8 +75,6 @@ def startGame(gameDisplay, player, clock, save):
         if player.lives == 0:
             return False
         elif reset is True:
-            player.rect.x = 0
-            player.rect.y = 500
             enemy_list, plat_list, rope_list, backdrop, candle = level.create(player)
         player_list.draw(gameDisplay)  # Redraw player
         if player.jump_cd > 0 or player.jumping:
