@@ -123,7 +123,7 @@ class Level():
                 'rat': [[250, 576], [630, 350]],
                 'candle': pygame.Rect(773, 280, 50, 50)
             },
-            '2': {
+            '3': {
                 'plt': [
                     [115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 625, 960, 35, 'basicLongPlatformSprite(1).png'],
                     [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'],
@@ -136,7 +136,7 @@ class Level():
                 'candle': pygame.Rect(773, 280, 50, 50),
                 'box': [[65, 80, 50, 50, 'woodenBoxSprite.png'], [495, 140, 50, 50, 'woodenBoxSprite.png']]
             },
-            '3': {
+            '2': {
                 'plt': [
                     [115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 625, 960, 35, 'basicLongPlatformSprite(1).png'],
                     [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'],
