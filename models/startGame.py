@@ -67,7 +67,7 @@ def startGame(gameDisplay, player, clock, save):
         player.gravity()  # Make sure gravity affects the player
         reset = player.update(enemy_list, plat_list, rope_list, box_list)  # Update player position
         if player.litCandle:
-            loc = (candle.left + 7, candle.top - 5)
+            loc = (candle.left + 17, candle.top - 5)
             gameDisplay.blit(flame[random.randint(0, 1)], (loc))
         if player.litCandle and player.rect.right >= 950 and player.rect.top >= 520:
             player.litCandle = False
@@ -112,7 +112,7 @@ class Level():
                    [375, 460, 50, 25, 'basicBlockPlatformSprite (1).png'], [840, 340, 50, 25, 'basicBlockPlatformSprite (1).png']],
                 'rat':  [[250, 576], [600, 576], [120, 300]],
                 'rop': [[470, 25, 21, 500, 'basicRopeSprite.png']],
-                'candle': pygame.Rect(773, 280, 50, 50)
+                'candle': pygame.Rect(763, 280, 70, 50)
             },
             '1': {
                 'plt': [[115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 620, 960, 25, 'basicLongPlatformSprite(1).png'],
@@ -123,7 +123,7 @@ class Level():
                    [320, 305, 25, 45, 'basicBlockPlatformSprite (1).png'], [430, 320, 105, 30, 'basicLongPlatformSprite(1).png']],
                 'rop': [[200, 0, 25, 250, 'basicRopeSprite.png'], [730, 0, 25, 350, 'basicRopeSprite.png']],
                 'rat': [[250, 576], [630, 350]],
-                'candle': pygame.Rect(773, 280, 50, 50)
+                'candle': pygame.Rect(763, 280, 70, 50)
             },
             '3': {
                 'plt': [
@@ -135,7 +135,7 @@ class Level():
                     [35, 340, 60, 25, 'basicBlockPlatformSprite (1).png'], [52, 130, 65, 25, 'basicBlockPlatformSprite (1).png']
                         ],
                 'rop': [[390, 0, 21, 280, 'basicRopeSprite.png'], [40, 0, 21, 280, 'basicRopeSprite.png']],
-                'candle': pygame.Rect(773, 280, 50, 50),
+                'candle': pygame.Rect(763, 280, 70, 50),
                 'box': [[65, 80, 50, 50, 'woodenBoxSprite.png'], [495, 140, 50, 50, 'woodenBoxSprite.png']]
             },
             '2': {
@@ -146,7 +146,7 @@ class Level():
                 ],
                 'rop': [[470, 50, 21, 500, 'basicRopeSprite.png'], [910, 50, 21, 440, 'basicRopeSprite.png']],
                 'rotate_rope': [0, 100, 25, 450, 'basicRopeSprite.png'],
-                'candle': pygame.Rect(773, 280, 50, 50),
+                'candle': pygame.Rect(763, 280, 70, 50),
                 'box': [[50, 80, 50, 50, 'woodenBoxSprite.png'], [655, 350, 50, 50, 'woodenBoxSprite.png']]
             },
             '4': {
@@ -193,7 +193,7 @@ class Level():
             rope_list.add(r)
         if player.level <= 5:
             backdrop = pygame.image.load('images/maps/Guardtower.png')
-            candle = pygame.Rect(773, 280, 50, 50)
+            candle = pygame.Rect(763, 280, 70, 50)
             player.rect.x = 0
             player.rect.y = 500
         return enemy_list, plat_list, rope_list, backdrop, candle, box_list

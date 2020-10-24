@@ -195,13 +195,13 @@ class Player(pygame.sprite.Sprite):
             if self.rect.bottom <= box.rect.bottom + 5 and self.rect.bottom >= box.rect.bottom - 5:  # pushing
                 if self.movex != 0:
                     box.prev_movex = self.movex
-                if self.rect.right - 20 <= box.rect.left + 5 and self.rect.right - 20 >= box.rect.left - 5:
-                    box.rect.left = self.rect.right - 20
-                elif self.rect.left + 20 >= box.rect.right - 5 and self.rect.left + 20 <= box.rect.right + 5:
-                    box.rect.right = self.rect.left + 20
+                if self.rect.right <= box.rect.left + 5 and self.rect.right >= box.rect.left - 5:
+                    box.rect.left = self.rect.right
+                elif self.rect.left >= box.rect.right - 5 and self.rect.left <= box.rect.right + 5:
+                    box.rect.right = self.rect.left
         for enemy in hit_list:
-            if (enemy.rect.right >= self.rect.left + 40 and
-                enemy.rect.left <= self.rect.right - 40) and\
+            if (enemy.rect.right >= self.rect.left + 5 and
+                enemy.rect.left <= self.rect.right - 5) and\
             self.rect.bottom <= enemy.rect.bottom +\
             (enemy.rect.top - enemy.rect.bottom) // 2:
                 self.falling = False
@@ -212,8 +212,8 @@ class Player(pygame.sprite.Sprite):
                     self.kills += 1
                 continue
             elif self.i_frame == 0 and self.rect.bottom >= enemy.rect.bottom - (enemy.image.get_size()[1] // 2):
-                if enemy.rect.right >= self.rect.left + 40 and\
-                enemy.rect.left <= self.rect.right - 40 and\
+                if enemy.rect.right >= self.rect.left + 5 and\
+                enemy.rect.left <= self.rect.right - 5 and\
                 self.rect.bottom >= enemy.rect.top + 10:
                     self.curr_health -= enemy.damage
                     self.i_frame = 60
@@ -229,12 +229,12 @@ class Player(pygame.sprite.Sprite):
                     self.movey = 0
                     self.jump_count = 0
                 if self.rect.bottom <= p.rect.top + 5:
-                    self.rect.bottom = p.rect.top + 5
+                    self.rect.bottom = p.rect.top
                     self.jumping = False
         for r in r_list:
             tmp_x = (self.rect.left + (self.image.get_size()[0] // 2))
             if r.rect.top + 6 < self.rect.top and r.rect.bottom >= self.rect.top:
-                if r.rect.left <= tmp_x and r.rect.right >= tmp_x:
+                if r.rect.left - 5 <= tmp_x and r.rect.right + 5 >= tmp_x:
                     self.climbing = True
                     self.jumping = False
                     self.hang = False
