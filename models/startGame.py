@@ -50,6 +50,8 @@ def startGame(gameDisplay, player, clock, save):
         if keys[pygame.K_l]:
             if candle.colliderect(player.rect):
                 player.lighting = True
+        if keys[pygame.K_m]:
+            player.level -= 1
         if not candle.colliderect(player.rect):
             player.lighting = False
         if not player.jumping:
@@ -146,6 +148,20 @@ class Level():
                 'rotate_rope': [0, 100, 25, 450, 'basicRopeSprite.png'],
                 'candle': pygame.Rect(773, 280, 50, 50),
                 'box': [[50, 80, 50, 50, 'woodenBoxSprite.png'], [655, 350, 50, 50, 'woodenBoxSprite.png']]
+            },
+            '4': {
+                'plt': [
+                    [115, 410, 205, 25, 'basicLongPlatformSprite(1).png'], [0, 625, 960, 35, 'basicLongPlatformSprite(1).png'],
+                    [640, 410, 205, 25, 'basicLongPlatformSprite(1).png'],
+                    [425, 150, 65, 25, 'basicLongPlatformSprite(1).png'], [535, 510, 50, 25, 'basicBlockPlatformSprite (1).png'],
+                    [835, 210, 70, 25, 'basicBlockPlatformSprite (1).png']
+                ],
+                'rat':  [[600, 576, True], [660, 576], [540, 576], [120, 300]],
+                'rop': [[25, 50, 21, 450, 'basicRopeSprite.png'], [400, 50, 21, 350, 'basicRopeSprite.png'], [905, 50, 21, 300, 'basicRopeSprite.png']],
+                'box': [
+                    [400, 575, 50, 50, 'woodenBoxSprite.png'], [450, 95, 50, 50, 'woodenBoxSprite.png'],
+                    [835, 155, 50, 50, 'woodenBoxSprite.png']
+                ]
             }
         }
         level = {'rat': [], 'rop': [], 'plt': [], 'box': []}
@@ -154,6 +170,8 @@ class Level():
             level.update(tmp)
         for rat in level.get('rat'):
             e = enemy.Rat(rat[0], rat[1])
+            if len(rat) > 2:
+                e.counter = e.dist
             enemy_list.add(e)
         for rope in level.get('rop'):
             r = platform.Rope(rope[0], rope[1], rope[2], rope[3], rope[4])
