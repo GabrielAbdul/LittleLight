@@ -46,8 +46,6 @@ class Box(pygame.sprite.Sprite):
         '''Moves the box'''
         p_list = pygame.sprite.spritecollide(self, plat_list, False)
         self.rect.x += self.movex
-        if self.movex != 0 and self.prev_movex != self.movex:
-            self.prev_movex = self.movex
         self.movex = 0
         for p in p_list:
             if p is not self:
@@ -58,5 +56,5 @@ class Box(pygame.sprite.Sprite):
                         self.rect.bottom = p.rect.top
         if p_list == [] or p_list == [self]:
             self.rect.bottom += 6
-            self.movex = self.prev_movex // 2
+            self.movex = 1 if self.prev_movex > 0 else -1
 

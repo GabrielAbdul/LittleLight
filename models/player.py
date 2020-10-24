@@ -193,7 +193,12 @@ class Player(pygame.sprite.Sprite):
         '''Checks for collision with player'''
         for box in b_list:
             if self.rect.bottom <= box.rect.bottom + 5 and self.rect.bottom >= box.rect.bottom - 5:  # pushing
-                box.movex = self.movex
+                if self.movex != 0:
+                    box.prev_movex = self.movex
+                if self.rect.right - 20 <= box.rect.left + 5 and self.rect.right - 20 >= box.rect.left - 5:
+                    box.rect.left = self.rect.right - 20
+                elif self.rect.left + 20 >= box.rect.right - 5 and self.rect.left + 20 <= box.rect.right + 5:
+                    box.rect.right = self.rect.left + 20
         for enemy in hit_list:
             if (enemy.rect.right >= self.rect.left + 40 and
                 enemy.rect.left <= self.rect.right - 40) and\
