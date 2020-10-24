@@ -15,11 +15,11 @@ def main():
 
     mainMenu = pygame.image.load('images/menu1.png')
     contMenu = pygame.image.load('images/menu2.jpg')
-    # newMenu = pygame.image.load('images/menu3.jpg')
+    # controls = pygame.image.load('images/menu3.jpg')
     mainMenu = pygame.transform.scale(mainMenu, (960, 640))
     size = (width, height) = mainMenu.get_size()
-    pygame.transform.scale(contMenu, (width, height))
-    # pygame.transform.scale(newMenu, (width, height))
+    contMenu = pygame.transform.scale(contMenu, (width, height))
+    # controls = pygame.transform.scale(controls, (width, height))
 
     gameDisplay = pygame.display.set_mode(size)
     gameDisplay.fill((0, 0, 0))
@@ -28,7 +28,7 @@ def main():
 
     # buttons
     auto_s = button([width / 3, height / 2 - 160, width / 3, 40], gameDisplay)
-    save_01 = button([width / 3, height / 2 - 200, width / 3, 40], gameDisplay)
+    save_01 = button([width / 3, height / 2 - 100, width / 3, 40], gameDisplay)
     save_02 = button([width / 3, height / 2 - 40, width / 3, 40], gameDisplay)
     save_03 = button([width / 3, height / 1 - 300, width / 3, 40], gameDisplay)
     newGame = button([width / 3, height / 2 + 50, width / 3, 40], gameDisplay,
@@ -37,7 +37,8 @@ def main():
                     (0, 0, 0))
     ext = button([width / 3, (height / 2) + 150, width / 3, 40], gameDisplay,
                     (0, 0, 0))
-    save_01 = button([width / 3, height / 2 - 100, width / 3, 40], gameDisplay)
+    c = button([320, 320, 100, 50])
+
 
     print("w/h: {}/{}".format(width, height))
 
@@ -46,6 +47,7 @@ def main():
         menus = {
             'main': mainMenu, 'continue': contMenu
         }
+        gameDisplay.fill((0, 0, 0))
         try:
             gameDisplay.blit(menus.get(name), (0, 0))
         except Exception:
@@ -67,6 +69,10 @@ def main():
             save_02.addText('Save 2', -20)
             save_03.draw()
             save_03.addText('Save 3', -20)
+        elif name == 'controls':
+            c.draw()
+            c.addText('continue')
+            pass
         return 0
 
     def charCreate(save, player):
