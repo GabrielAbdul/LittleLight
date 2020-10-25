@@ -80,7 +80,8 @@ def main():
         done = False
         sprite = pygame.image.load('images/sprites/Sprite1standright.png').\
         convert_alpha()
-        sprite = pygame.transform.scale(sprite, (400, 400))
+        print(sprite.get_size())
+        sprite = pygame.transform.scale(sprite, (200, 400))
         print(sprite.get_size())
         s_points = 6
         s_points_button = button([width - 250, 10, 200, 30])
