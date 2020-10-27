@@ -1,4 +1,4 @@
-# Little Light
+# Little Light :candle:
 
 ![Candle Light](/images/giphy.gif)
 
@@ -12,20 +12,24 @@ A game about a small boy in a very big world, who just wants to make the world a
 
 * [Python]
 
-## How to install
+## How to install :computer:
 
-* To run from source code, Python version 3.4 or higher along with the PyGame module must be installed. Once installed, just run the littlelight.py file as a script.
+* To run from source code, Python version 3.4 or higher along with the PyGame module must be installed. Once installed run
+```
+python3 ./littlelight.py
+```
+and you'll be good to go!
 
 ## Built By
 
-* Brett Davis: Level design and backend
-* Gabriel Abdul-Raheem: Save and Achievements feature, minor sprite design/aesthetics
-* Jill Rogers: Art design - sprites, maps
-* Lauren Collins: Title screen image, pause screen image
+* Brett Davis: Level design and backend :adult:
+* Gabriel Abdul-Raheem: Save and Achievements feature, minor sprite design/aesthetics :adult:
+* Jill Rogers: Art design - sprites, maps :woman:
+* Lauren Collins: Title screen image, pause screen image :woman:
 
-## How to play
+## How to play :desktop\_computer:
 
-### Controls:
+### Controls: :keyboard:
 
 * ESC - Pause the game
 * W, A, S, D - jump/climb, move left, move down through platforms, and move right respectively. The arrow keys may also be used
@@ -39,7 +43,7 @@ Enemies exist on each level, and while defeating them is not mandatory, their de
 The player has 3 stats you can control at the start of the game; strength, agility, and glow. All have more planned interactions in future versions, but currently strength and glow affect your health, while agility affects how frequently you can jump.
 The player has 3 lives at the start of the game, and will have to load from a save upon losing all of them. The game autosaves after each level, but manual saving is not yet implemented.
 
-### Screenshots:
+### Screenshots: :framed\_picture:
 
 Main Menu:
 
