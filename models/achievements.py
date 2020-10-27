@@ -42,7 +42,8 @@ class achievement():
         }
         if player is not None and achievement is not None:
             player.achievements.append(achievement)
-            pygame.image.load(a.get(str(achievement))).convert()
+            # display small image of achievement
+            # pygame.image.load(a.get(str(achievement))).convert()
             return 1
         return 0
 
