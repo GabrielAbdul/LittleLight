@@ -34,9 +34,15 @@ class achievement():
 
     def grant_achievement(self, player, achievement):
         '''grants achievements to user'''
+        a = {
+            rdm: 'images/achievements/random.png',
+            stonks: 'images/achievements/strength.png',
+            ll: 'images/achievements/candle.png',
+            shine: 'images/achievements/lantern.png',
+        }
         if player is not None and achievement is not None:
             player.achievements.append(achievement)
-            # display_achievement
+            pygame.image.load(a.get(str(achievement))).convert()
             return 1
         return 0
 

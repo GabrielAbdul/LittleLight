@@ -20,9 +20,10 @@ def startGame(gameDisplay, player, clock, save):
     flame = []
     flame.append(pygame.image.load('images/sprites/Flame1.png'))
     flame.append(pygame.image.load('images/sprites/Flame2.png'))
+    originalGlow = player.glow
     while not done:
         # checking for player stats and granting achievements based on them
-        if player.strength >= 30:
+        if player.strength > 10:
             granted = achieve.grant_achievement(player, achievements[1])
             if granted == 1:
                 print("Achievement {} Unlocked!".format(achievements[1]))
@@ -30,11 +31,11 @@ def startGame(gameDisplay, player, clock, save):
             granted = achieve.grant_achievement(player, achievements[0])
             if granted == 1:
                 print("Achievement {} Unlocked!".format(achievements[0]))
-        if player.glow >= 10:
+        if player.glow > originalGlow:
             granted = achieve.grant_achievement(player, achievements[3])
             if granted == 1:
                 print("Achievement {} Unlocked!".format(achievements[3]))
-        if player.glow < 2:
+        if player.glow < originalGlow:
             granted = achieve.grant_achievement(player, achievements[2])
             if granted == 1:
                 print("Achievement {} Unlocked!".format(achievements[2]))
