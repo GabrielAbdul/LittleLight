@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 '''module that defines player class'''
 import pygame
+import random
 
 
 class Player(pygame.sprite.Sprite):
@@ -8,6 +9,9 @@ class Player(pygame.sprite.Sprite):
     steps = 2  # Number of pixels per step. Repeated in startGame
     jump_count = 0  # counter for jump time
     hang_count = 0  # counter for hang time after jumping
+    randomInt = random.randrange(0, 100)
+    achievements = []
+
 
     def __init__(self):
         '''method to be called upon object instantiation'''

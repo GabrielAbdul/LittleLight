@@ -1,4 +1,6 @@
-# Little Light
+# Little Light :candle:
+
+![Candle Light](/images/giphy.gif)
 
 A basic Python game currently consisting of 5 levels, made as a school project and chosen in order to practice concepts of game design that are common to many games.
 
@@ -10,20 +12,24 @@ A game about a small boy in a very big world, who just wants to make the world a
 
 * [Python]
 
-## How to install
+## How to install :computer:
 
-* To run from source code, Python version 3.4 or higher along with the PyGame module must be installed. Once installed, just run the littlelight.py file as a script.
+* To run from source code, Python version 3.4 or higher along with the PyGame module must be installed. Once installed run
+```
+python3 ./littlelight.py
+```
+and you'll be good to go!
 
 ## Built By
 
-* Brett Davis: Level design and backend
-* Gabriel Abdul-Raheem: Save and Achievements feature, minor sprite design/aesthetics 
-* Jill Rogers: Art design - sprites, maps
-* Lauren Collins: Title screen image, pause screen image
+* Brett Davis: Level design and backend :adult:
+* Gabriel Abdul-Raheem: Save and Achievements feature, minor sprite design/aesthetics :adult:
+* Jill Rogers: Art design - sprites, maps :woman:
+* Lauren Collins: Title screen image, pause screen image :woman:
 
-## How to play
+## How to play :desktop\_computer:
 
-### Controls:
+### Controls: :keyboard:
 
 * ESC - Pause the game
 * W, A, S, D - jump/climb, move left, move down through platforms, and move right respectively. The arrow keys may also be used
@@ -36,6 +42,36 @@ The goal of each level is to move to the candle and light it, before proceeding 
 Enemies exist on each level, and while defeating them is not mandatory, their deaths may make levels easier. Killing/sparing enemies has no effect on gameplay currently, but plans are in place to add weight to the decision in the future.
 The player has 3 stats you can control at the start of the game; strength, agility, and glow. All have more planned interactions in future versions, but currently strength and glow affect your health, while agility affects how frequently you can jump.
 The player has 3 lives at the start of the game, and will have to load from a save upon losing all of them. The game autosaves after each level, but manual saving is not yet implemented.
+
+### Screenshots: :framed\_picture:
+
+Main Menu:
+
+![Main Menu](/images/littlelight_mainMenu.png)
+
+Character Creation:
+
+![Character Creation](/images/littlelight_charSelection.png)
+
+Level One:
+
+![Level One](/images/littlelight_levelOne.png)
+
+Level Two:
+
+![Level Two](/images/littlelight_levelTwo.png)
+
+Level Three:
+
+![Level Three](/images/littlelight_levelThree.png)
+
+Level Four:
+
+![Level Four](/images/littlelight_levelFour.png)
+
+Level Five:
+
+![Level Five](/images/littlelight_levelFive.png)
 
 ### Project contents
 

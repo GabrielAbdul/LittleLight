@@ -32,15 +32,19 @@ class achievement():
         return '{' + "{}.{}: {}".format(self.__class__.__name__, self.id, self.
                                         __dict__) + '}'
 
-    @classmethod
-    def grant_achievement(cls, id):
+    def grant_achievement(self, player, achievement):
         '''grants achievements to user'''
-        if id != 0:
-            for a in cls.__all_achievements:
-                if a.id == id:
-                    a.complete = True
-                    # display_achievement
-                    return 1
+        a = {
+            rdm: 'images/achievements/random.png',
+            stonks: 'images/achievements/strength.png',
+            ll: 'images/achievements/candle.png',
+            shine: 'images/achievements/lantern.png',
+        }
+        if player is not None and achievement is not None:
+            player.achievements.append(achievement)
+            # display small image of achievement
+            # pygame.image.load(a.get(str(achievement))).convert()
+            return 1
         return 0
 
     @classmethod
@@ -66,3 +70,4 @@ def create_achievements():
                      hint="Increase your glow")
     shine = achievement(name="Shine Bright", id=3,
                         hint="Have a lot of glow")
+    return [rdm, stonks, ll, shine]
