@@ -50,29 +50,36 @@ The player has 3 lives at the start of the game, and will have to load from a sa
 
 ![Main Menu](/images/littlelight_mainMenu.png)
 </details>
-Character Creation:
+<details>
+    <summary>Character Creation:</summary>
 
 ![Character Creation](/images/littlelight_charSelection.png)
-
-Level One:
+</details>
+<details>
+    <summary>Level One:</summary>
 
 ![Level One](/images/littlelight_levelOne.png)
-
-Level Two:
+</details>
+<details>
+    <summary>Level Two:</summary>
 
 ![Level Two](/images/littlelight_levelTwo.png)
-
-Level Three:
+</details>
+<details>
+    <summary>Level Three:</summary>
 
 ![Level Three](/images/littlelight_levelThree.png)
-
-Level Four:
+</details>
+<details>
+    <summary>Level Four:</summary>
 
 ![Level Four](/images/littlelight_levelFour.png)
-
-Level Five:
+</details>
+<details>
+    <summary>Level Five:</summary>
 
 ![Level Five](/images/littlelight_levelFive.png)
+</details>
 
 ### Project contents
 
