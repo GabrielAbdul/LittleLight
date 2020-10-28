@@ -45,10 +45,11 @@ The player has 3 lives at the start of the game, and will have to load from a sa
 
 ### Screenshots: :framed\_picture:
 
-Main Menu:
+<details>
+    <summary>Main Menu:</summary>
 
 ![Main Menu](/images/littlelight_mainMenu.png)
-
+</details>
 Character Creation:
 
 ![Character Creation](/images/littlelight_charSelection.png)
