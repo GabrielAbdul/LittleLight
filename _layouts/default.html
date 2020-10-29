@@ -4,13 +4,17 @@
   {%- include head.html -%}
 
   <body>
-
-    <main>
-      <img style="width: 100%" src="https://github.com/GabrielAbdul/LittleLight/blob/main/images/menu1.png?raw=true" alt="LittleLight Main Menu">
-      <div class="container">
+    <img style="width: 100%" src="https://github.com/GabrielAbdul/LittleLight/blob/main/images/menu1.png?raw=true" alt="LittleLight Main Menu">
+    <div class="container">   
+      
+      {%- include header.html -%}
+      
+      <main>
+        
         {{ content }}
-      </div>
-    </main>
+        
+      </main>
+    </div>
 
     {%- include footer.html -%}
 
