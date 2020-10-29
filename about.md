@@ -1,5 +1,10 @@
 ## - About
 
+Little Light was based on the idea that everyone has a little good in them, which over time evolved into the concept of our character wanting to bring well-being and happiness into his world. We felt that this concept was best represented by him lighting a candle to make the world a brighter place.
+
+The story behind the game takes place at night following the death of a well-loved king. Our character happens upon the community, and seeing how sad everyone is, sets off to try and bring some happiness to them.
+
+
 ### Our Team
 Developers: 
 
