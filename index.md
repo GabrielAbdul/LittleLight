@@ -1,5 +1,5 @@
-# /
-# The World Just Needs a Little (more) Light
+# Little Light
+## The World Just Needs a Little (more) Light
 
 Lose yourself in Little Light, the newest 2D platformer and puzzzler that will guide you along your journey of bringing joy to the saddened people of the kingdom by spreading Light throughout the Castle -- a place that you will need to accurately manuever to acomplish your goal!
 
