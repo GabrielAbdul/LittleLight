@@ -14,4 +14,4 @@ Developers:
 
 [Jill Rogers](https://github.com/jilroge7) [twitter](https://twitter.com/JilRoge7) [LinkedIn](https://www.linkedin.com/in/jill-rogers-ba29313a/)
 
-[Gabriel Abdul-Raheem](https://github.com/gabrielabdul) [twitter]() [LinkedIn](https://www.linkedin.com/in/gabriel-abdul-raheem-3a1a01144/)
+[Gabriel Abdul-Raheem](https://github.com/gabrielabdul) [twitter](https://twitter.com/__GabrielAbdul) [LinkedIn](https://www.linkedin.com/in/gabriel-abdul-raheem-3a1a01144/)
