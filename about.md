@@ -1,6 +1,6 @@
-## - About
-
 ![Sprite](https://i.ibb.co/9cwtps3/Sprite1standleft.png)
+
+## - About
 
 Little Light was based on the idea that everyone has a little good in them, which over time evolved into the concept of our character wanting to bring well-being and happiness into his world. We felt that this concept was best represented by him lighting a candle to make the world a brighter place.
 
