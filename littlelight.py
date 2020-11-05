@@ -13,6 +13,8 @@ def main():
     done = False
     pygame.display.set_caption('Little Light')
 
+    '''Menus'''
+
     mainMenu = pygame.image.load('images/menu1.png')
     contMenu = pygame.image.load('images/menu2.jpg')
     # controls = pygame.image.load('images/menu3.jpg')
@@ -26,7 +28,8 @@ def main():
     clock = pygame.time.Clock()
     menu = 'main'
 
-    # buttons
+    '''buttons'''
+
     auto_s = button([width / 3, height / 2 - 160, width / 3, 40], gameDisplay)
     save_01 = button([width / 3, height / 2 - 100, width / 3, 40], gameDisplay)
     save_02 = button([width / 3, height / 2 - 40, width / 3, 40], gameDisplay)
@@ -159,11 +162,11 @@ def main():
             pygame.display.flip()
         save.player = player
 
-    while not done:
+    while not done:  # Starting gameloop for main menu
         ch = displayMenu(menu)
-        if ch == 1:
+        if ch == 1:  # Exit if an error is encountered while displaying menu
             break
-        for event in pygame.event.get():
+        for event in pygame.event.get():  # Loop through event queue
             if event.type == pygame.QUIT:
                 done = True
             elif event.type == pygame.KEYDOWN:
@@ -173,7 +176,7 @@ def main():
                         done = pause_game(gameDisplay)
                     elif menu == 'continue' or menu == 'newgame':
                         menu = 'main'
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # On click
                 pos = pygame.mouse.get_pos()
                 if menu == 'main':
                     if ext.rect.collidepoint(pos):
