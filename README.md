@@ -4,7 +4,7 @@
 
 A basic Python game currently consisting of 5 levels, made as a school project and chosen in order to practice concepts of game design that are common to many games.
 
-![Landing Page](https://gabrielabdul.github.io/LittleLight/)
+[Landing Page](https://gabrielabdul.github.io/LittleLight/)
 
 ## About / synopsis
 
