@@ -4,6 +4,8 @@
 
 A basic Python game currently consisting of 5 levels, made as a school project and chosen in order to practice concepts of game design that are common to many games.
 
+![Landing Page](https://gabrielabdul.github.io/LittleLight/)
+
 ## About / synopsis
 
 A game about a small boy in a very big world, who just wants to make the world a brighter place.
@@ -22,9 +24,9 @@ and you'll be good to go!
 
 ## Built By
 
-* Brett Davis: Level design and backend :adult:
-* Gabriel Abdul-Raheem: Save and Achievements feature, minor sprite design/aesthetics :adult:
-* Jill Rogers: Art design - sprites, maps :woman:
+* [Brett Davis](https://github.com/menacingmanatee) [twitter](https://twitter.com/bre_p_d) [LinkedIn](https://www.linkedin.com/in/brett-davis-132916155/): Level design and backend :adult:
+* [Gabriel Abdul-Raheem](https://github.com/gabrielabdul) [twitter](https://twitter.com/__GabrielAbdul) [LinkedIn](https://www.linkedin.com/in/gabriel-abdul-raheem-3a1a01144/): Save and Achievements feature, minor sprite design/aesthetics :adult:
+* [Jill Rogers](https://github.com/jilroge7) [twitter](https://twitter.com/JilRoge7) [LinkedIn](https://www.linkedin.com/in/jill-rogers-ba29313a/): Art design - sprites, maps :woman:
 * Lauren Collins: Title screen image, pause screen image :woman:
 
 ## How to play :desktop\_computer:
