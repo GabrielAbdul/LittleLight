@@ -20,7 +20,7 @@ class achievement():
 
     @classmethod
     def check_achievements(cls):
-        '''Returns a list of completed achievements'''
+        '''returns a list of completed achievements'''
         res = []
         for a in cls.__all_achievements:
             if a.complete:
