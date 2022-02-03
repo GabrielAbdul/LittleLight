@@ -209,6 +209,7 @@ def main():
                     saves = storage.load_save()
                     save = Save()
                     save.objects = saves
+                    # detect which save user clicks on
                     if auto_s.rect.collidepoint(pos):
                         player.updateStats(json.dumps(saves.get('auto')))
                         print(player.getStats())
